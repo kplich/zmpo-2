@@ -10,3 +10,8 @@ Menu::Menu()
 Menu::~Menu()
 {
 }
+
+void Menu::run() const
+{
+	
+}

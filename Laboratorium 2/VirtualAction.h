@@ -22,6 +22,6 @@ public:
 	 * Method running the contents of the command.
 	 */
 	//TODO: should this be void?
-	virtual void run_action() const = 0;
+	virtual void perform_action() const = 0;
 };
 

@@ -15,7 +15,7 @@ void MenuCommand::run() const
 {
 	if(action != NULL)
 	{
-		action->run_action();
+		action->perform_action();
 	}
 	else
 	{
