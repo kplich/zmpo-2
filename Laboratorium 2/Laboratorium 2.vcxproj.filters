@@ -18,9 +18,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VirtualCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VirtualMenuItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -30,7 +27,10 @@
     <ClInclude Include="MenuCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
+    <ClInclude Include="VirtualAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,9 +39,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Laboratorium 2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VirtualMenuItem.cpp">
@@ -53,7 +50,10 @@
     <ClCompile Include="MenuCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
+    <ClCompile Include="VirtualAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Action.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

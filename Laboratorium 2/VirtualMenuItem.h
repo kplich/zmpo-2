@@ -24,7 +24,7 @@ public:
 	 * Virtual method that performs some action.
 	 */
 	//TODO: should this really return void?
-	virtual void run() = 0;
+	virtual void run() const = 0;
 
 	/**
 	 * Returns the command used to run the item.
@@ -37,12 +37,12 @@ public:
 	 * Returns name of the item.
 	 * @return string containing short name of the item
 	 */
+	//TODO: as mentioned earlier
 	std::string get_name() const;
-
 
 private:
 	/**
-	 * Command that will be used to run the menu item.
+	 * Command that will be used to perform an action.
 	 */
 	const std::string command;
 

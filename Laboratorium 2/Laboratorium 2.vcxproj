@@ -151,15 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Command.h" />
+    <ClInclude Include="Action.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuCommand.h" />
     <ClInclude Include="VirtualMenuItem.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="VirtualCommand.h" />
+    <ClInclude Include="VirtualAction.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Action.cpp" />
     <ClCompile Include="Laboratorium 2.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuCommand.cpp" />
@@ -170,7 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="VirtualCommand.cpp" />
+    <ClCompile Include="VirtualAction.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
