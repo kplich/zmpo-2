@@ -2,17 +2,53 @@
 #include <string>
 
 /**
- * "Pure virtual class created for Menu and MenuCommand to derive from???
+ * Generic class for implementing a runnable menu item.
+ * <b>Not mutable!</b>
  */
+//TODO: is it exactly 'pure virtual'?
 class VirtualMenuItem
 {
 public:
+	/**
+	 * Default constructor, declared for subclasses to invoke.
+	 */
+	//TODO: either delete it or make protected?
 	VirtualMenuItem();
-	virtual ~VirtualMenuItem();
-private:
-	std::string command;
-	std::string name;
-public:
+
+	/**
+	 * Destructor. Must be implemented by subclasses.
+	 */
+	virtual ~VirtualMenuItem() = 0;
+
+	/**
+	 * Virtual method that performs some action.
+	 */
+	//TODO: should this really return void?
 	virtual void run() = 0;
+
+	/**
+	 * Returns the command used to run the item.
+	 * @return command used to run the item
+	 */
+	//TODO: does this has to be here, has to be virtual or maybe not?
+	std::string get_command() const;
+
+	/**
+	 * Returns name of the item.
+	 * @return string containing short name of the item
+	 */
+	std::string get_name() const;
+
+
+private:
+	/**
+	 * Command that will be used to run the menu item.
+	 */
+	const std::string command;
+
+	/**
+	 * Name of the menu or action performed.
+	 */
+	const std::string name;
 };
 

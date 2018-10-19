@@ -7,6 +7,6 @@ VirtualCommand::VirtualCommand()
 }
 
 
-VirtualCommand::~VirtualCommand()
-{
-}
+//TODO: should a destructor be here?
+
+
