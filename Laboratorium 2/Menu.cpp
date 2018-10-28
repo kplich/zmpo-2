@@ -2,21 +2,15 @@
 #include "Menu.h"
 #include <iostream>
 #include "utility.h"
+#include <iterator>
 
 
 Menu::Menu()
 {
 }
 
-Menu::Menu(std::vector<VirtualMenuItem*>* menu_items, std::string description, std::string command) : VirtualMenuItem(description, command)
+Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command) : VirtualMenuItem(description, command)
 {
-	this->menu_items = menu_items;
-	this->item_map = nullptr;
-}
-
-Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string name) : VirtualMenuItem(description, command)
-{
-	this->menu_items = nullptr;
 	this->item_map = item_map;
 }
 
@@ -26,10 +20,13 @@ Menu::~Menu()
 
 void Menu::print_options()
 {
-	std::cout << "Available options:\n";
-	for (int i = 0; i<menu_items->size(); ++i)
+	std::cout << "\nAvailable options:\n";
+
+	std::map<std::string, VirtualMenuItem*>::iterator temp_iterator = item_map->begin();
+
+	for ( ; temp_iterator != item_map->end(); ++temp_iterator)
 	{
-		std::cout << menu_items->at(i)->get_description() << ":\t" << menu_items->at(i)->get_command() << "\n";
+		std::cout << temp_iterator->second->get_description() << ":\t" << temp_iterator->first << "\n";
 	}
 }
 

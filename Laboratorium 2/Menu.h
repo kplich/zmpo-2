@@ -14,12 +14,6 @@ public:
 	//TODO is it useful?
 	Menu();
 
-	//TODO: delete one of these constructors
-	/**
-	 * Constructor based on a vector of menu items
-	 */
-	Menu(std::vector<VirtualMenuItem*>* menu_items, std::string description, std::string name);
-
 	/**
 	 * Parametrized constructor based on a <b>map</b> of menu items
 	 */
