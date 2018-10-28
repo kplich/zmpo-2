@@ -33,15 +33,18 @@ public:
 
 private:
 	/**
-	 * List of menu items - both submenus and commands.
+	 * Map of menu items and their commands - both submenus and commands.
 	 */
-	//TODO: maybe a map for command names and menu items would be safer?
-	std::vector<VirtualMenuItem*>* menu_items;
-
 	std::map<std::string, VirtualMenuItem*>* item_map;
 
+	/**
+	 * Prints all menu items and their commands
+	 */
 	void print_options();
 
+	/**
+	 *
+	 */
 	VirtualMenuItem* choose_option();
 };
 

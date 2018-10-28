@@ -12,6 +12,9 @@ Menu::Menu()
 Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command) : VirtualMenuItem(description, command)
 {
 	this->item_map = item_map;
+
+	//TODO: make this MenuCommand a constant
+	insert_item_into_map(item_map, return_command);
 }
 
 Menu::~Menu()
@@ -40,17 +43,21 @@ VirtualMenuItem* Menu::choose_option()
 
 void Menu::run()
 {
-	print_options();
+	VirtualMenuItem* chosen_item;
 
-	VirtualMenuItem* chosen_item = choose_option();
+	do
+	{
+		print_options();
+		chosen_item = choose_option();
 
-	if (chosen_item != nullptr)
-	{
-		chosen_item->run();
-	}
-	else
-	{
-		//no command has been found, so the menu closes
-		std::cout << "No option with given command has been found. Reverting back to main menu.\n";
-	}
+		if (chosen_item == nullptr)
+		{
+			std::cout << "No option with given command found.\n";
+		}
+		else
+		{
+			chosen_item->run();
+		}
+		
+	} while (chosen_item != return_command);
 }
