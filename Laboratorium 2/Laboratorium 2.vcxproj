@@ -152,7 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Action.h" />
-    <ClInclude Include="menu_items.h" />
+    <ClInclude Include="DummyAction1.h" />
+    <ClInclude Include="DummyAction2.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuCommand.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="VirtualMenuItem.h" />
@@ -161,8 +163,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
+    <ClCompile Include="DummyAction1.cpp" />
+    <ClCompile Include="DummyAction2.cpp" />
     <ClCompile Include="Laboratorium 2.cpp" />
-    <ClCompile Include="menu_items.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuCommand.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="VirtualMenuItem.cpp" />
