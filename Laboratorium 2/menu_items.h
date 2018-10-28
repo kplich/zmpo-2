@@ -14,6 +14,11 @@ public:
 	Menu();
 
 	/**
+	 * Constructor based on a vector of menu items
+	 */
+	Menu(std::vector<VirtualMenuItem*> menu_items);
+
+	/**
 	 * Destructor.
 	 */
 	//TODO: what to implement here?
@@ -29,6 +34,6 @@ private:
 	 * List of menu items - both submenus and commands.
 	 */
 	//TODO: maybe a map for command names and menu items would be safer?
-	std::vector<VirtualMenuItem*> menu;
+	std::vector<VirtualMenuItem*> menu_items;
 };
 

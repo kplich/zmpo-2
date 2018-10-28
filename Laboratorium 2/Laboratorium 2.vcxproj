@@ -152,8 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Action.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="menu_items.h" />
     <ClInclude Include="MenuCommand.h" />
+    <ClInclude Include="utility.h" />
     <ClInclude Include="VirtualMenuItem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="VirtualAction.h" />
@@ -161,8 +162,9 @@
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="Laboratorium 2.cpp" />
-    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="menu_items.cpp" />
     <ClCompile Include="MenuCommand.cpp" />
+    <ClCompile Include="utility.cpp" />
     <ClCompile Include="VirtualMenuItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
