@@ -15,10 +15,11 @@ public:
 	//TODO: either delete it or make protected?
 	VirtualMenuItem();
 
+	//TODO: shouldn't it actually be virtual???
 	/**
 	 * Destructor. Must be implemented by subclasses.
 	 */
-	virtual ~VirtualMenuItem() = 0;
+	~VirtualMenuItem();
 
 	/**
 	 * Virtual method that performs some action.

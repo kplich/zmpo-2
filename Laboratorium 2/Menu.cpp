@@ -6,7 +6,7 @@ Menu::Menu()
 {
 }
 
-Menu::Menu(std::vector<VirtualMenuItem*> menu_items)
+Menu::Menu(std::vector<VirtualMenuItem*>* menu_items)
 {
 	this->menu_items = menu_items;
 }

@@ -12,6 +12,11 @@ public:
 	MenuCommand();
 
 	/**
+	 * Parametrized constructor.
+	 */
+	MenuCommand(VirtualAction* action);
+
+	/**
 	 * Destructor.
 	 */
 	//TODO: what should implement here???

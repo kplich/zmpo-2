@@ -11,6 +11,11 @@ MenuCommand::~MenuCommand()
 {
 }
 
+MenuCommand::MenuCommand(VirtualAction* action)
+{
+	this->action = action;
+}
+
 void MenuCommand::run() const
 {
 	if(action != NULL)

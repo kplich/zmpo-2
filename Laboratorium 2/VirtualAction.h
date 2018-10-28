@@ -16,7 +16,8 @@ public:
 	/**
 	 * Virtual destructor, for subclasses to <b>implement</b>!
 	 */
-	virtual ~VirtualAction() = 0;
+	//TODO: shouldn't that be virtual??
+	~VirtualAction();
 
 	/**
 	 * Method running the contents of the command.
