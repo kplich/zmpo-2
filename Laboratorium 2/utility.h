@@ -6,3 +6,5 @@
 std::vector<VirtualMenuItem*>* get_menu_items();
 
 std::map<std::string, VirtualMenuItem*>* get_map_of_menu_items();
+
+std::string get_input_from_user();

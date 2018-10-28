@@ -14,7 +14,7 @@ public:
 	/**
 	 * Parametrized constructor.
 	 */
-	MenuCommand(VirtualAction* action);
+	MenuCommand(VirtualAction* action, std::string description, std::string command);
 
 	/**
 	 * Destructor.
@@ -23,9 +23,9 @@ public:
 	~MenuCommand();
 
 	/**
-	 * Performs action defined in the @code {action} object if it's well-defined.
+	 * Performs action defined in the action object if it's well-defined.
 	 */
-	void run() const;
+	void run();
 
 private:
 	/**

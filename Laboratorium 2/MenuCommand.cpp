@@ -11,12 +11,12 @@ MenuCommand::~MenuCommand()
 {
 }
 
-MenuCommand::MenuCommand(VirtualAction* action)
+MenuCommand::MenuCommand(VirtualAction* action, std::string description, std::string command) : VirtualMenuItem(description, command)
 {
 	this->action = action;
 }
 
-void MenuCommand::run() const
+void MenuCommand::run()
 {
 	if(action != NULL)
 	{

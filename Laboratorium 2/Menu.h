@@ -16,7 +16,7 @@ public:
 	/**
 	 * Constructor based on a vector of menu items
 	 */
-	Menu(std::vector<VirtualMenuItem*>* menu_items);
+	Menu(std::vector<VirtualMenuItem*>* menu_items, std::string description, std::string name);
 
 	/**
 	 * Destructor.
@@ -27,7 +27,8 @@ public:
 	/**
 	 * Allows for interaction with the menu.
 	 */
-	void run() const;
+	//TODO: don't we need a pointer to the vector to modify it???
+	void run();
 
 private:
 	/**
@@ -35,5 +36,9 @@ private:
 	 */
 	//TODO: maybe a map for command names and menu items would be safer?
 	std::vector<VirtualMenuItem*>* menu_items;
+
+	void print_options();
+
+	VirtualMenuItem* choose_option();
 };
 
