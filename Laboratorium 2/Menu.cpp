@@ -11,8 +11,14 @@ Menu::Menu()
 Menu::Menu(std::vector<VirtualMenuItem*>* menu_items, std::string description, std::string command) : VirtualMenuItem(description, command)
 {
 	this->menu_items = menu_items;
+	this->item_map = nullptr;
 }
 
+Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string name) : VirtualMenuItem(description, command)
+{
+	this->menu_items = nullptr;
+	this->item_map = item_map;
+}
 
 Menu::~Menu()
 {
@@ -31,19 +37,8 @@ VirtualMenuItem* Menu::choose_option()
 {
 	std::string chosen_command = get_input_from_user();
 
-	//TODO: implement a loop
-	for (int i = 0; i < menu_items->size(); ++i)
-	{
-		if (menu_items->at(i)->get_command() == chosen_command)
-		{
-			return menu_items->at(i);
-		}
-	}
-
-	//TODO: uhm, plz no?
-	return nullptr;
+	return item_map->find(chosen_command)->second;
 }
-
 
 
 void Menu::run()

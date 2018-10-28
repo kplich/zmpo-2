@@ -34,6 +34,10 @@ std::vector<VirtualMenuItem*>* get_menu_items()
 
 std::map<std::string, VirtualMenuItem*>* get_map_of_menu_items()
 {
+	VirtualAction* sub_action_1 = new DummyAction1();
+	VirtualAction* sub_action_2 = new DummyAction2();
+
+
 	return nullptr;
 }
 
