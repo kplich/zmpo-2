@@ -4,7 +4,6 @@
 #include "utility.h"
 #include <iterator>
 
-
 Menu::Menu()
 {
 }
