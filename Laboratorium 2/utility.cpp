@@ -7,17 +7,18 @@
 #include "MenuCommand.h"
 #include <iostream>
 
-std::map<std::string, VirtualMenuItem*>* get_map_of_menu_items()
+//TODO: actions aren't really reusable!!!
+Menu* get_main_menu()
 {
 	VirtualAction* sub_action_1 = new DummyAction1();
 	VirtualAction* sub_action_2 = new DummyAction2();
 
-	VirtualMenuItem* command_1 = new MenuCommand(
+	VirtualMenuItem* sub_command_1 = new MenuCommand(
 		sub_action_1,
 		"Performs action 1.",
 		"action_1");
 
-	VirtualMenuItem* command_2 = new MenuCommand(
+	VirtualMenuItem* sub_command_2 = new MenuCommand(
 		sub_action_2,
 		"Performs action 2.",
 		"action_2"
@@ -25,11 +26,25 @@ std::map<std::string, VirtualMenuItem*>* get_map_of_menu_items()
 
 	std::map<std::string, VirtualMenuItem*>* sub_menu_map = new std::map<std::string, VirtualMenuItem*>();
 
-	insert_item_into_map(sub_menu_map, command_1);
-	insert_item_into_map(sub_menu_map, command_2);
+	insert_item_into_map(sub_menu_map, sub_command_1);
+	insert_item_into_map(sub_menu_map, sub_command_2);
 
 	VirtualMenuItem* sub_menu = new Menu(sub_menu_map, "Open sub-menu.", "sub_menu");
 
+
+	VirtualAction* action_1 = new DummyAction1();
+	VirtualAction* action_2 = new DummyAction2();
+
+	VirtualMenuItem* command_1 = new MenuCommand(
+		action_1,
+		"Performs action 1.",
+		"action_1");
+
+	VirtualMenuItem* command_2 = new MenuCommand(
+		action_2,
+		"Performs action 2.",
+		"action_2"
+	);
 
 	std::map<std::string, VirtualMenuItem*>* menu_map = new std::map<std::string, VirtualMenuItem*>();
 
@@ -37,7 +52,10 @@ std::map<std::string, VirtualMenuItem*>* get_map_of_menu_items()
 	insert_item_into_map(menu_map, command_2);
 	insert_item_into_map(menu_map, sub_menu);
 
-	return menu_map;
+	//TODO: lol, wtf can't this be of type VirtualMenuItem???
+	Menu* main_menu = new Menu(menu_map, "Open main menu", "main_menu");
+
+	return main_menu;
 }
 
 void insert_item_into_map(std::map<std::string, VirtualMenuItem*>* item_map, VirtualMenuItem* menu_item)
