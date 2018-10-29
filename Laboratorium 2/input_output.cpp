@@ -24,6 +24,8 @@ std::string get_user_input()
 {
 	std::string result;
 	std::getline(std::cin, result);
+
+	std::cout << "\n";
 	return result;
 }
 
@@ -63,7 +65,7 @@ int loop_until_valid_int(int range_min, int range_max)
 
 	do
 	{
-		std::cout << "Podaj liczbe z zakresu " << range_min << "-" << range_max << "\n";
+		std::cout << "Podaj liczbe z zakresu " << range_min << " - " << range_max << "\n";
 		valid = get_int_input(result, range_min, range_max);
 
 		if (!valid)

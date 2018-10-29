@@ -27,14 +27,12 @@ public:
 	 * Returns the command used to run the item.
 	 * @return command used to run the item
 	 */
-	//TODO: does this has to be here, has to be virtual or maybe not?
 	std::string get_command() const;
 
 	/**
 	 * Returns description of the item.
 	 * @return string containing short description of the item
 	 */
-	//TODO: as mentioned earlier
 	std::string get_description() const;
 
 protected:

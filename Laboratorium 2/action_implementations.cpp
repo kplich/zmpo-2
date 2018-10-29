@@ -4,28 +4,28 @@
 #include "../../Laboratorium 1/Laboratorium 1/editing_menu.h"
 #include "input_output.h"
 
-void print_all_tables(std::vector<Table*>* tables)
+void print_all_tables(std::vector<Table*>* vector_of_tables)
 {
 	std::cout << "Wszystkie tablice:\n";
 
-	for (int i = 0; i < tables->size(); ++i)
+	for (int i = 0; i < vector_of_tables->size(); ++i)
 	{
-		std::cout << "index " << i << "\t" << tables->at(i)->to_short_string() << std::endl;
+		std::cout << "index " << i << "\t" << vector_of_tables->at(i)->to_short_string() << std::endl;
 	}
 }
 
-void print_one_table(std::vector<Table*>* tables)
+void print_one_table(std::vector<Table*>* vector_of_tables)
 {
 	std::cout << "Któr¹ tabelê chcesz wyœwietliæ? (indeksy zaczynaj¹ siê od zera)\n";
 
-	int chosen_table_number = loop_until_valid_int(0, tables->size() - 1);
+	int chosen_table_number = loop_until_valid_int(0, vector_of_tables->size() - 1);
 
 	//write out the table
 	std::cout << "Tablica nr: " << chosen_table_number << ":" << "\n";
-	std::cout << tables->at(chosen_table_number)->to_full_string();
+	std::cout << vector_of_tables->at(chosen_table_number)->to_full_string();
 }
 
-void add_table(std::vector<Table*>* tables)
+void add_table(std::vector<Table*>* vector_of_tables)
 {
 	Table* new_table;
 
@@ -35,7 +35,7 @@ void add_table(std::vector<Table*>* tables)
 	if (name == "default")
 	{
 		new_table = new Table();
-		tables->push_back(new_table);
+		vector_of_tables->push_back(new_table);
 		return;
 	}
 	else
@@ -47,26 +47,12 @@ void add_table(std::vector<Table*>* tables)
 		new_table = new Table(name, size);
 	}
 
-	tables->push_back(new_table);
+	vector_of_tables->push_back(new_table);
 }
 
-void edit_table(std::vector<Table*>* tables)
+void clone_table(std::vector<Table*>* vector_of_tables)
 {
-	if (tables->empty())
-	{
-		std::cout << "Nie dodano zadnej tablicy.\n";
-	}
-	else
-	{
-		Table* edited_table = get_table_for_editing(*tables);
-
-		run_editing_loop(edited_table);
-	}
-}
-
-void clone_table(std::vector<Table*>* tables)
-{
-	if (tables->empty())
+	if (vector_of_tables->empty())
 	{
 		std::cout << "Nie dodano zadnej tablicy.\n";
 	}
@@ -74,14 +60,14 @@ void clone_table(std::vector<Table*>* tables)
 	{
 		std::cout << "Ktora tabele chcesz sklonowac? (indeksy zaczynaj¹ siê od zera)\n";
 
-		int chosen_table_number = loop_until_valid_int(0, tables->size() - 1);
+		int chosen_table_number = loop_until_valid_int(0, vector_of_tables->size() - 1);
 
-		Table* cloned_table = new Table(*tables->at(chosen_table_number));
-		tables->push_back(cloned_table);
+		Table* cloned_table = new Table(*vector_of_tables->at(chosen_table_number));
+		vector_of_tables->push_back(cloned_table);
 	}
 }
 
-void delete_all_tables(std::vector<Table*>* tables)
+void delete_all_tables(std::vector<Table*>* vector_of_tables)
 {
 	std::cout << "Czy jesteœ pewien, ¿e chcesz usun¹æ wszystkie tablice?" << std::endl;
 	std::cout << "Wpisz 1, aby potwierdziæ." << std::endl;
@@ -92,13 +78,13 @@ void delete_all_tables(std::vector<Table*>* tables)
 
 	if (confirmation == 1)
 	{
-		deallocate_tables(tables);
+		deallocate_tables(vector_of_tables);
 	}
 }
 
-void delete_one_table(std::vector<Table*>* tables)
+void delete_one_table(std::vector<Table*>* vector_of_tables)
 {
-	if (tables->empty())
+	if (vector_of_tables->empty())
 	{
 		std::cout << "Nie dodano zadnej tablicy.\n";
 	}
@@ -106,40 +92,42 @@ void delete_one_table(std::vector<Table*>* tables)
 	{
 		std::cout << "Któr¹ tabelê chcesz usun¹æ? (indeksy zaczynaj¹ siê od zera)\n";
 
-		int chosen_table_number = loop_until_valid_int(0, tables->size() - 1);
+		int chosen_table_number = loop_until_valid_int(0, vector_of_tables->size() - 1);
 
 		//deallocate the table's memory
-		delete tables->at(chosen_table_number);
+		delete vector_of_tables->at(chosen_table_number);
 
 		//delete the pointer from the vector
-		tables->erase(tables->begin() + chosen_table_number);
+		vector_of_tables->erase(vector_of_tables->begin() + chosen_table_number);
 	}
 }
 
-void deallocate_tables(std::vector<Table*>* tables)
+void deallocate_tables(std::vector<Table*>* vector_of_tables)
 {
-	while (tables->size() > 0)
+	while (vector_of_tables->size() > 0)
 	{
-		Table* table = tables->at(0);
+		Table* table = vector_of_tables->at(0);
 
 		delete table;
 
-		tables->erase(tables->begin());
+		vector_of_tables->erase(vector_of_tables->begin());
 	}
 }
 //--------------------------------------------------------------------------------------
 
-Table* get_table_for_editing(std::vector<Table*>* tables)
+Table* get_table_for_editing(std::vector<Table*>* vector_of_tables)
 {
 	std::cout << "Ktora tabele chcesz edytowac?\n";
 
-	int chosen_index = loop_until_valid_int(0, tables->size() - 1);
+	int chosen_index = loop_until_valid_int(0, vector_of_tables->size() - 1);
 
-	return tables->at(chosen_index);
+	return vector_of_tables->at(chosen_index);
 }
 
-void rename_table(Table* edited_table)
+void rename_table(std::vector<Table*>* vector_of_tables)
 {
+	Table* edited_table = get_table_for_editing(vector_of_tables);
+
 	std::cout << "Podaj nowa nazwe tabeli.\n";
 	std::cout << "Obecna nazwa tabeli: " << edited_table->get_table_name() << "\n";
 	std::string new_name = get_user_input();
@@ -147,8 +135,10 @@ void rename_table(Table* edited_table)
 	edited_table->set_table_name(new_name);
 }
 
-void resize_table(Table* edited_table)
+void resize_table(std::vector<Table*>* vector_of_tables)
 {
+	Table* edited_table = get_table_for_editing(vector_of_tables);
+
 	std::cout << "Podaj nowy rozmiar tabeli.\n";
 	std::cout << "Obecny rozmiar tabeli: " << edited_table->get_table_length() << "\n";
 	std::cout << "Uwaga! Podanie rozmiaru mniejszego niz obecny spowoduje utrate danych!\n";
@@ -160,8 +150,10 @@ void resize_table(Table* edited_table)
 	communicate_success(resize_successful);
 }
 
-void put_value(Table* edited_table)
+void put_value(std::vector<Table*>* vector_of_tables)
 {
+	Table* edited_table = get_table_for_editing(vector_of_tables);
+
 	std::cout << "Podaj wartosc, ktora chcesz wpisac do tabeli.\n";
 
 	int new_value = loop_until_valid_int(MIN_INTEGER, MAX_INTEGER);

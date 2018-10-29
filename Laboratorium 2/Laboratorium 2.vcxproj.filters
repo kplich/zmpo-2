@@ -36,9 +36,6 @@
     <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VectorBasedAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="vector_based_action_classes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="prepare_menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TableAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,9 +77,6 @@
     <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VectorBasedAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="vector_based_action_classes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="prepare_menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TableAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

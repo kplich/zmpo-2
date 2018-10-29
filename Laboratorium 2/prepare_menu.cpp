@@ -27,14 +27,8 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"print all"
 	);
 
-
-
 	//TODO: not exactly how it should be!
-	VirtualMenuItem* edit_table = new MenuCommand(
-		new EditTable(table_vector),
-		"Edit chosen table",
-		"edit"
-	);
+	VirtualMenuItem* edit_table = get_editing_menu(table_vector);
 
 	VirtualMenuItem* clone_table = new MenuCommand(
 		new CloneTable(table_vector),
@@ -54,6 +48,7 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"delete all"
 	);
 
+
 	main_menu->add_new_item(add_table);
 	main_menu->add_new_item(print_one);
 	main_menu->add_new_item(print_all);
@@ -64,3 +59,33 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 
 	return main_menu;
 }
+
+VirtualMenuItem* get_editing_menu(std::vector<Table*>* table_vector)
+{
+	Menu* editing_menu = new Menu("Edit table", "edit");
+
+	VirtualMenuItem* rename_table = new MenuCommand(
+		new RenameTable(table_vector),
+		"Rename chosen table",
+		"rename"
+	);
+
+	VirtualMenuItem* resize_table = new MenuCommand(
+		new ResizeTable(table_vector),
+		"Resize chosen table",
+		"resize"
+	);
+
+	VirtualMenuItem* put_value = new MenuCommand(
+		new PutValue(table_vector),
+		"Put value into the chosen table",
+		"put value"
+	);
+
+	editing_menu->add_new_item(rename_table);
+	editing_menu->add_new_item(resize_table);
+	editing_menu->add_new_item(put_value);
+
+	return editing_menu;
+}
+
