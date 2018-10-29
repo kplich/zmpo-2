@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "action_implementations.h"
-#include "../../Laboratorium 1/Laboratorium 1/io_utility.h"
 #include <iostream>
 #include "../../Laboratorium 1/Laboratorium 1/editing_menu.h"
+#include "input_output.h"
 
 void print_all_tables(std::vector<Table*>* tables)
 {
@@ -58,7 +58,7 @@ void edit_table(std::vector<Table*>* tables)
 	}
 	else
 	{
-		Table* edited_table = get_table_for_editing(tables);
+		Table* edited_table = get_table_for_editing(*tables);
 
 		run_editing_loop(edited_table);
 	}
@@ -126,4 +126,51 @@ void deallocate_tables(std::vector<Table*>* tables)
 
 		tables->erase(tables->begin());
 	}
+}
+//--------------------------------------------------------------------------------------
+
+Table* get_table_for_editing(std::vector<Table*>* tables)
+{
+	std::cout << "Ktora tabele chcesz edytowac?\n";
+
+	int chosen_index = loop_until_valid_int(0, tables->size() - 1);
+
+	return tables->at(chosen_index);
+}
+
+void rename_table(Table* edited_table)
+{
+	std::cout << "Podaj nowa nazwe tabeli.\n";
+	std::cout << "Obecna nazwa tabeli: " << edited_table->get_table_name() << "\n";
+	std::string new_name = get_user_input();
+
+	edited_table->set_table_name(new_name);
+}
+
+void resize_table(Table* edited_table)
+{
+	std::cout << "Podaj nowy rozmiar tabeli.\n";
+	std::cout << "Obecny rozmiar tabeli: " << edited_table->get_table_length() << "\n";
+	std::cout << "Uwaga! Podanie rozmiaru mniejszego niz obecny spowoduje utrate danych!\n";
+
+	int new_size = loop_until_valid_int(1, MAX_TABLE_SIZE);
+
+	bool resize_successful = edited_table->set_table_length(new_size);
+
+	communicate_success(resize_successful);
+}
+
+void put_value(Table* edited_table)
+{
+	std::cout << "Podaj wartosc, ktora chcesz wpisac do tabeli.\n";
+
+	int new_value = loop_until_valid_int(MIN_INTEGER, MAX_INTEGER);
+
+	std::cout << "Na ktorej pozycji chcesz wpisac nowa wartosc?\n";
+
+	int chosen_index = loop_until_valid_int(0, edited_table->get_table_length() - 1);
+
+	bool write_successful = edited_table->set_value(chosen_index, new_value);
+
+	communicate_success(write_successful);
 }

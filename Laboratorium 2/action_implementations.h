@@ -2,7 +2,6 @@
 #include <vector>
 #include "../../Laboratorium 1/Laboratorium 1/Table.h"
 
-
 void print_all_tables(std::vector<Table*>* tables);
 void print_one_table(std::vector<Table*>* tables);
 void add_table(std::vector<Table*>* tables);
@@ -16,3 +15,9 @@ void delete_one_table(std::vector<Table*>* tables);
  * @param tables reference to the table vector that is supposed to be cleared.
  */
 void deallocate_tables(std::vector<Table*>* tables);
+
+Table* get_table_for_editing(std::vector<Table*>* tables);
+
+void rename_table(Table* edited_table);
+void resize_table(Table* edited_table);
+void put_value(Table* edited_table);

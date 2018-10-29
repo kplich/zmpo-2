@@ -4,6 +4,7 @@
 #include "utility.h"
 #include <iterator>
 #include "ReturnAction.h"
+#include "input_output.h"
 
 Menu::Menu(std::string description, std::string command):
 	VirtualMenuItem(description, command)
@@ -57,7 +58,7 @@ void Menu::print_options()
 
 VirtualMenuItem* Menu::choose_option()
 {
-	std::string chosen_command = get_input_from_user();
+	std::string chosen_command = get_user_input();
 
 	return item_map->find(chosen_command)->second;
 }

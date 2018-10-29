@@ -62,15 +62,3 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 
 	return main_menu;
 }
-
-void insert_item_into_map(std::map<std::string, VirtualMenuItem*>* item_map, VirtualMenuItem* menu_item)
-{
-	item_map->insert(std::pair<std::string, VirtualMenuItem*>(menu_item->get_command(), menu_item));
-}
-
-std::string get_input_from_user()
-{
-	std::string result;
-	std::getline(std::cin, result);
-	return result;
-}
