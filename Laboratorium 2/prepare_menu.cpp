@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "utility.h"
+#include "prepare_menu.h"
 #include "Menu.h"
 #include <iostream>
 #include "vector_based_action_classes.h"
@@ -26,6 +26,8 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"Print all tables",
 		"print all"
 	);
+
+
 
 	//TODO: not exactly how it should be!
 	VirtualMenuItem* edit_table = new MenuCommand(
