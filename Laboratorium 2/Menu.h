@@ -7,7 +7,6 @@
 class Menu : public VirtualMenuItem
 {
 public:
-	//TODO construction based on a vector of menu items
 
 	/**
 	 * Default constructor.

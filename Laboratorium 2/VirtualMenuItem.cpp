@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "VirtualMenuItem.h"
+#include <iostream>
 
 
 VirtualMenuItem::VirtualMenuItem()
@@ -10,12 +11,13 @@ VirtualMenuItem::VirtualMenuItem()
 VirtualMenuItem::VirtualMenuItem(const std::string description, const std::string command) 
 	: description(description), command(command)
 {
+	std::cout << "Parametrized VirtualMenuItem constructor, " << command << "\n";
 }
 
 
 VirtualMenuItem::~VirtualMenuItem()
 {
-	
+	std::cout << "VirtualMenuItem destructor, " << command << "\n";
 }
 
 

@@ -14,10 +14,13 @@ Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string descri
 	this->item_map = item_map;
 
 	insert_item_into_map(item_map, &return_command);
+
+	std::cout << "Parametrized Menu constructor, " << command << "\n";
 }
 
 Menu::~Menu()
 {
+	std::cout << "Menu Destructor, " << command << "\n";
 }
 
 void Menu::print_options()
