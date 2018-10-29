@@ -5,15 +5,12 @@
 #include <iterator>
 #include "ReturnAction.h"
 
-Menu::Menu()
-{
-}
 
 Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command) : VirtualMenuItem(description, command)
 {
 	this->item_map = item_map;
-
-	insert_item_into_map(item_map, &return_command);
+	this->return_command = new MenuCommand(new ReturnAction(), "Return to previous menu", "return");
+	insert_item_into_map(item_map, return_command);;
 
 	std::cout << "Parametrized Menu constructor, " << command << "\n";
 }
@@ -21,6 +18,13 @@ Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string descri
 Menu::~Menu()
 {
 	std::cout << "Menu Destructor, " << command << "\n";
+
+	std::map<std::string, VirtualMenuItem*>::iterator destructing_iterator = item_map->begin();
+
+	for (; destructing_iterator != item_map->end(); ++destructing_iterator)
+	{
+		delete destructing_iterator->second;
+	}
 }
 
 void Menu::print_options()
@@ -61,7 +65,5 @@ void Menu::run()
 			chosen_item->run();
 		}
 		
-	} while (chosen_item != &return_command);
+	} while (chosen_item != return_command);
 }
-
-MenuCommand Menu::return_command(new ReturnAction(), "Return to previous menu", "return");

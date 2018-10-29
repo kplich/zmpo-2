@@ -6,12 +6,6 @@ class MenuCommand : public VirtualMenuItem
 {
 public:
 	/**
-	 * Default constructor.
-	 */
-	//TODO this one doesn't seem to be useful; one parametrized by VirtualAction would make more sense
-	MenuCommand();
-
-	/**
 	 * Parametrized constructor.
 	 */
 	MenuCommand(VirtualAction* action, std::string description, std::string command);

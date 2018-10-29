@@ -9,19 +9,13 @@
 class VirtualMenuItem
 {
 public:
-	/**
-	 * Default constructor, declared for subclasses to invoke.
-	 */
-	//TODO: either delete it or make protected?
-	VirtualMenuItem();
-
 	VirtualMenuItem(const std::string description, const std::string command);
 
 	//TODO: shouldn't it actually be virtual???
 	/**
 	 * Destructor. Must be implemented by subclasses.
 	 */
-	~VirtualMenuItem();
+	virtual ~VirtualMenuItem();
 
 	/**
 	 * Virtual method that performs some action.

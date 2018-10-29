@@ -3,14 +3,11 @@
 #include <iostream>
 
 
-MenuCommand::MenuCommand()
-{
-}
-
-
 MenuCommand::~MenuCommand()
 {
 	std::cout << "MenuCommand destructor, " << command << "\n";
+
+	delete action;
 }
 
 MenuCommand::MenuCommand(VirtualAction* action, std::string description, std::string command) : VirtualMenuItem(description, command)
@@ -22,7 +19,7 @@ MenuCommand::MenuCommand(VirtualAction* action, std::string description, std::st
 
 void MenuCommand::run()
 {
-	if(action != NULL)
+	if(action != nullptr)
 	{
 		action->perform_action();
 	}
