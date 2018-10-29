@@ -2,6 +2,7 @@
 #include "VirtualMenuItem.h"
 #include <vector>
 #include <map>
+#include "MenuCommand.h"
 
 class Menu : public VirtualMenuItem
 {
@@ -46,5 +47,8 @@ private:
 	 *
 	 */
 	VirtualMenuItem* choose_option();
+
+	//TODO: this maybe should be constant
+	static MenuCommand return_command;
 };
 

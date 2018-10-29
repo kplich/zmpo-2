@@ -1,11 +1,6 @@
 ﻿#pragma once
-#include <vector>
 #include "VirtualMenuItem.h"
 #include <map>
-#include "MenuCommand.h"
-#include "ReturnAction.h"
-
-MenuCommand* const return_command = new MenuCommand(new ReturnAction(), "Return to previous menu", "return");
 
 std::map<std::string, VirtualMenuItem*>* get_map_of_menu_items();
 

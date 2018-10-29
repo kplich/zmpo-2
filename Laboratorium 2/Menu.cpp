@@ -3,6 +3,7 @@
 #include <iostream>
 #include "utility.h"
 #include <iterator>
+#include "ReturnAction.h"
 
 Menu::Menu()
 {
@@ -12,8 +13,7 @@ Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string descri
 {
 	this->item_map = item_map;
 
-	//TODO: make this MenuCommand a constant
-	insert_item_into_map(item_map, return_command);
+	insert_item_into_map(item_map, &return_command);
 }
 
 Menu::~Menu()
@@ -58,5 +58,7 @@ void Menu::run()
 			chosen_item->run();
 		}
 		
-	} while (chosen_item != return_command);
+	} while (chosen_item != &return_command);
 }
+
+MenuCommand Menu::return_command(new ReturnAction(), "Return to previous menu", "return");
