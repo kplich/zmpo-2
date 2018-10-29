@@ -2,11 +2,13 @@
 #include "utility.h"
 #include "Menu.h"
 #include <iostream>
-#include "actions.h"
+#include "vector_based_action_classes.h"
 
 //TODO: actions aren't really reusable!!!
 VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
+	Menu* main_menu = new Menu("Open main menu", "main_menu");
+
 	VirtualMenuItem* add_table = new MenuCommand(
 		new AddTable(table_vector),
 		"Add a new table",
@@ -25,11 +27,38 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"print all"
 	);
 
-	Menu* main_menu = new Menu("Open main menu", "main_menu");
+	//TODO: not exactly how it should be!
+	VirtualMenuItem* edit_table = new MenuCommand(
+		new EditTable(table_vector),
+		"Edit chosen table",
+		"edit"
+	);
+
+	VirtualMenuItem* clone_table = new MenuCommand(
+		new CloneTable(table_vector),
+		"Clone chosen table",
+		"clone"
+	);
+
+	VirtualMenuItem* delete_one_table = new MenuCommand(
+		new DeleteOneTable(table_vector),
+		"Delete single, chosen table",
+		"delete one"
+	);
+
+	VirtualMenuItem* delete_all_tables = new MenuCommand(
+		new DeleteAllTables(table_vector),
+		"Delete all tables",
+		"delete all"
+	);
 
 	main_menu->add_new_item(add_table);
 	main_menu->add_new_item(print_one);
 	main_menu->add_new_item(print_all);
+	main_menu->add_new_item(edit_table);
+	main_menu->add_new_item(clone_table);
+	main_menu->add_new_item(delete_one_table);
+	main_menu->add_new_item(delete_all_tables);
 
 	return main_menu;
 }
