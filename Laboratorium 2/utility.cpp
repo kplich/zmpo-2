@@ -1,59 +1,25 @@
 #include "pch.h"
 #include "utility.h"
 #include "VirtualAction.h"
-#include "DummyAction2.h"
 #include "Menu.h"
-#include "DummyAction1.h"
-#include "MenuCommand.h"
 #include <iostream>
+#include "actions.h"
 
 //TODO: actions aren't really reusable!!!
-Menu* get_main_menu()
+VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
-	VirtualAction* sub_action_1 = new DummyAction1();
-	VirtualAction* sub_action_2 = new DummyAction2();
-
-	VirtualMenuItem* sub_command_1 = new MenuCommand(
-		sub_action_1,
-		"Performs action 1.",
-		"action_1");
-
-	VirtualMenuItem* sub_command_2 = new MenuCommand(
-		sub_action_2,
-		"Performs action 2.",
-		"action_2"
+	VirtualMenuItem* add_table = new MenuCommand(
+		new AddTable(table_vector),
+		"Add a new table",
+		"add"
 	);
 
-	std::map<std::string, VirtualMenuItem*>* sub_menu_map = new std::map<std::string, VirtualMenuItem*>();
+	std::map<std::string, VirtualMenuItem*>* main_menu_map = new std::map<std::string, VirtualMenuItem*>();
 
-	insert_item_into_map(sub_menu_map, sub_command_1);
-	insert_item_into_map(sub_menu_map, sub_command_2);
-
-	VirtualMenuItem* sub_menu = new Menu(sub_menu_map, "Open sub-menu.", "sub_menu");
-
-
-	VirtualAction* action_1 = new DummyAction1();
-	VirtualAction* action_2 = new DummyAction2();
-
-	VirtualMenuItem* command_1 = new MenuCommand(
-		action_1,
-		"Performs action 1.",
-		"action_1");
-
-	VirtualMenuItem* command_2 = new MenuCommand(
-		action_2,
-		"Performs action 2.",
-		"action_2"
-	);
-
-	std::map<std::string, VirtualMenuItem*>* menu_map = new std::map<std::string, VirtualMenuItem*>();
-
-	insert_item_into_map(menu_map, command_1);
-	insert_item_into_map(menu_map, command_2);
-	insert_item_into_map(menu_map, sub_menu);
+	insert_item_into_map(main_menu_map, add_table);
 
 	//TODO: lol, wtf can't this be of type VirtualMenuItem???
-	Menu* main_menu = new Menu(menu_map, "Open main menu", "main_menu");
+	VirtualMenuItem* main_menu = new Menu(main_menu_map, "Open main menu", "main_menu");
 
 	return main_menu;
 }

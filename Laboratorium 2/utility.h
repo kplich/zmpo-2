@@ -1,9 +1,10 @@
 ﻿#pragma once
 #include "VirtualMenuItem.h"
 #include <map>
-#include "Menu.h"
+#include <vector>
+#include "../../Laboratorium 1/Laboratorium 1/Table.h"
 
-Menu* get_main_menu();
+VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector);
 
 void insert_item_into_map(std::map<std::string, VirtualMenuItem*>* item_map, VirtualMenuItem* menu_item);
 

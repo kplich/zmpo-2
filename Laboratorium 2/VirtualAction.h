@@ -2,7 +2,7 @@
 
 //TODO: is this class really necessary?
 /**
- * A generic kind of interface for defining actions for commands.
+ * Generic interface for defining actions for commands.
  */
 class VirtualAction
 {
@@ -14,10 +14,9 @@ public:
 	VirtualAction();
 
 	/**
-	 * Virtual destructor, for subclasses to <b>implement</b>!
+	 * Virtual destructor.
 	 */
-	//TODO: shouldn't that be virtual??
-	~VirtualAction();
+	virtual ~VirtualAction();
 
 	/**
 	 * Method running the contents of the command.
