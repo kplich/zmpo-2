@@ -14,9 +14,16 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"add"
 	);
 
+	VirtualMenuItem* print_table = new MenuCommand(
+		new PrintTable(table_vector),
+		"Print one of the tables",
+		"print_one"
+	);
+
 	std::map<std::string, VirtualMenuItem*>* main_menu_map = new std::map<std::string, VirtualMenuItem*>();
 
 	insert_item_into_map(main_menu_map, add_table);
+	insert_item_into_map(main_menu_map, print_table);
 
 	//TODO: lol, wtf can't this be of type VirtualMenuItem???
 	VirtualMenuItem* main_menu = new Menu(main_menu_map, "Open main menu", "main_menu");

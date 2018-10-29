@@ -151,10 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\editing_menu.h" />
+    <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\io_utility.h" />
+    <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\main_menu.h" />
     <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\Table.h" />
     <ClInclude Include="actions.h" />
-    <ClInclude Include="DummyAction1.h" />
-    <ClInclude Include="DummyAction2.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuCommand.h" />
     <ClInclude Include="ReturnAction.h" />
@@ -164,10 +165,11 @@
     <ClInclude Include="VirtualAction.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\editing_menu.cpp" />
+    <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\io_utility.cpp" />
+    <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\main_menu.cpp" />
     <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\Table.cpp" />
     <ClCompile Include="actions.cpp" />
-    <ClCompile Include="DummyAction1.cpp" />
-    <ClCompile Include="DummyAction2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuCommand.cpp" />

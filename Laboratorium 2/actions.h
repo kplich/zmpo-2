@@ -15,3 +15,15 @@ private:
 	//TODO: this actually isn't readonly, might have to remove const qualifier
 	std::vector<Table*>* const table_vector;
 };
+
+class PrintTable: public VirtualAction
+{
+public:
+	PrintTable(std::vector<Table*>* table_vector);
+	~PrintTable();
+
+	void perform_action() const override;
+
+private:
+	std::vector<Table*>* const table_vector{};
+};

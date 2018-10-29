@@ -67,3 +67,8 @@ void Menu::run()
 		
 	} while (chosen_item != return_command);
 }
+
+void Menu::add_new_item(VirtualMenuItem * new_item)
+{
+	//TODO: implement!
+}

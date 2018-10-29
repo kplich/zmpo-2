@@ -25,6 +25,8 @@ class Menu : public VirtualMenuItem
 		//TODO: don't we need a pointer to the vector to modify it???
 		void run();
 
+		void add_new_item(VirtualMenuItem* new_item);
+
 	private:
 		/**
 		 * Map of menu items and their commands - both submenus and commands.
