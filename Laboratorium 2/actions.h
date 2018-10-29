@@ -1,29 +1,34 @@
 #pragma once
-#include "VirtualAction.h"
 #include <vector>
 #include "../../Laboratorium 1/Laboratorium 1/Table.h"
+#include "VectorBasedAction.h"
 
-class AddTable : public VirtualAction
+/**
+ * Class representing adding a table to the vector.
+ */
+class AddTable : public VectorBasedAction
 {
 public:
 	AddTable(std::vector<Table*>* table_vector);
 	~AddTable();
 
 	void perform_action() const override;
-
-private:
-	//TODO: this actually isn't readonly, might have to remove const qualifier
-	std::vector<Table*>* const table_vector;
 };
 
-class PrintTable: public VirtualAction
+class PrintOneTable: public VectorBasedAction
 {
 public:
-	PrintTable(std::vector<Table*>* table_vector);
-	~PrintTable();
+	PrintOneTable(std::vector<Table*>* table_vector);
+	~PrintOneTable();
 
 	void perform_action() const override;
+};
 
-private:
-	std::vector<Table*>* const table_vector{};
+class PrintAllTables: public VectorBasedAction
+{
+public:
+	PrintAllTables(std::vector<Table*>* table_vector);
+	~PrintAllTables();
+
+	void perform_action() const override;
 };

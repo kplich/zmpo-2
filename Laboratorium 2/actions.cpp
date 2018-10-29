@@ -3,7 +3,7 @@
 #include "../../Laboratorium 1/Laboratorium 1/main_menu.h"
 
 AddTable::AddTable(std::vector<Table*>* table_vector)
-	:table_vector(table_vector)
+	:VectorBasedAction(table_vector)
 {
 	
 }
@@ -21,23 +21,44 @@ void AddTable::perform_action() const
 {
 	add_table(*table_vector);
 }
-
 //-----------------------------------------------------------------------------
-PrintTable::PrintTable(std::vector<Table*>* table_vector)
-	:table_vector(table_vector)
+
+PrintOneTable::PrintOneTable(std::vector<Table*>* table_vector)
+	:VectorBasedAction(table_vector)
 {
 	
 }
 
-PrintTable::~PrintTable()
+PrintOneTable::~PrintOneTable()
 {
 	//like mentioned earlier
 }
 
-void PrintTable::perform_action() const
+void PrintOneTable::perform_action() const
 {
 	print_one_table(*table_vector);
 }
+//-----------------------------------------------------------------------------
+
+PrintAllTables::PrintAllTables(std::vector<Table*>* table_vector):
+	VectorBasedAction(table_vector)
+{
+	
+}
+
+PrintAllTables::~PrintAllTables()
+{
+	
+}
+
+void PrintAllTables::perform_action() const
+{
+	print_all_tables(*table_vector);
+}
+
+
+
+
 
 
 

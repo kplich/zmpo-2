@@ -160,6 +160,7 @@
     <ClInclude Include="MenuCommand.h" />
     <ClInclude Include="ReturnAction.h" />
     <ClInclude Include="utility.h" />
+    <ClInclude Include="VectorBasedAction.h" />
     <ClInclude Include="VirtualMenuItem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="VirtualAction.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="MenuCommand.cpp" />
     <ClCompile Include="ReturnAction.cpp" />
     <ClCompile Include="utility.cpp" />
+    <ClCompile Include="VectorBasedAction.cpp" />
     <ClCompile Include="VirtualMenuItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

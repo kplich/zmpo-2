@@ -5,14 +5,30 @@
 #include <iterator>
 #include "ReturnAction.h"
 
+Menu::Menu(std::string description, std::string command):
+	VirtualMenuItem(description, command)
+{
+	this->item_map = new std::map<std::string, VirtualMenuItem*>();
+	this->return_command = new MenuCommand(
+		new ReturnAction(),
+		"Return to previous menu",
+		"return"
+	);
 
-Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command) : VirtualMenuItem(description, command)
+	insert_item_into_map(item_map, return_command);
+
+	std::cout << "Not-map parametrized Menu constructor, " << command << "\n";
+}
+
+
+Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command):
+	VirtualMenuItem(description, command)
 {
 	this->item_map = item_map;
 	this->return_command = new MenuCommand(new ReturnAction(), "Return to previous menu", "return");
 	insert_item_into_map(item_map, return_command);;
 
-	std::cout << "Parametrized Menu constructor, " << command << "\n";
+	std::cout << "Map parametrized Menu constructor, " << command << "\n";
 }
 
 Menu::~Menu()
@@ -68,7 +84,13 @@ void Menu::run()
 	} while (chosen_item != return_command);
 }
 
-void Menu::add_new_item(VirtualMenuItem * new_item)
+void Menu::add_new_item(VirtualMenuItem* new_item)
 {
+	insert_item_into_map(item_map, new_item);
 	//TODO: implement!
+}
+
+void Menu::insert_item_into_map(std::map<std::string, VirtualMenuItem*>* item_map, VirtualMenuItem* menu_item)
+{
+	item_map->insert(std::pair<std::string, VirtualMenuItem*>(menu_item->get_command(), menu_item));
 }
