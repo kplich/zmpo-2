@@ -17,7 +17,9 @@ public:
 	 */
 	Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command);
 
-	//TODO: what to implement here?
+	/**
+	 * All resources are released here - each menu item, including the return item, and the map itself.
+	 */
 	~Menu();
 
 	/**
@@ -29,8 +31,12 @@ public:
 	 * Allows for adding a new menu item.
 	 * @param new_item pointer to new item to be added
 	 */
-	void add_new_item(AbstractMenuItem* new_item);
+	void add_item(AbstractMenuItem* new_item);
 
+	/**
+	 * Allows for deleting an item from the menu.
+	 * @param item_command command used to invoke the item
+	 */
 	void delete_item(std::string item_command);
 
 private:

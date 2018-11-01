@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-//TODO: member initializer list instead of usual constructor!
+//member initializer list instead of usual constructor!
 AbstractMenuItem::AbstractMenuItem(const std::string description, const std::string command) 
 	: description(description), command(command)
 {

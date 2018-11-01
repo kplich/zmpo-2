@@ -4,7 +4,8 @@
 #include <iostream>
 #include "vector_based_action_classes.h"
 
-//TODO: actions aren't really reusable!!!
+//all these allocations are deallocated in Menu and MenuCommand destructors
+
 AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
 	Menu* main_menu = new Menu("Open main menu", "main_menu");
@@ -27,7 +28,6 @@ AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"print all"
 	);
 
-	//TODO: not exactly how it should be!
 	AbstractMenuItem* edit_table = get_editing_menu(table_vector);
 
 	AbstractMenuItem* clone_table = new MenuCommand(
@@ -48,14 +48,13 @@ AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"delete all"
 	);
 
-
-	main_menu->add_new_item(add_table);
-	main_menu->add_new_item(print_one);
-	main_menu->add_new_item(print_all);
-	main_menu->add_new_item(edit_table);
-	main_menu->add_new_item(clone_table);
-	main_menu->add_new_item(delete_one_table);
-	main_menu->add_new_item(delete_all_tables);
+	main_menu->add_item(add_table);
+	main_menu->add_item(print_one);
+	main_menu->add_item(print_all);
+	main_menu->add_item(edit_table);
+	main_menu->add_item(clone_table);
+	main_menu->add_item(delete_one_table);
+	main_menu->add_item(delete_all_tables);
 
 	return main_menu;
 }
@@ -82,9 +81,9 @@ AbstractMenuItem* get_editing_menu(std::vector<Table*>* table_vector)
 		"put value"
 	);
 
-	editing_menu->add_new_item(rename_table);
-	editing_menu->add_new_item(resize_table);
-	editing_menu->add_new_item(put_value);
+	editing_menu->add_item(rename_table);
+	editing_menu->add_item(resize_table);
+	editing_menu->add_item(put_value);
 
 	return editing_menu;
 }

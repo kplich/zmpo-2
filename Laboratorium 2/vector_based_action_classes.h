@@ -33,16 +33,6 @@ public:
 	void perform_action() const override;
 };
 
-//TODO: uhm, is it exactly a vector-based action???
-class EditTable: public TableAction
-{
-public:
-	EditTable(std::vector<Table*>* table_vector);
-	~EditTable();
-
-	void perform_action() const override;
-};
-
 class CloneTable: public TableAction
 {
 public:

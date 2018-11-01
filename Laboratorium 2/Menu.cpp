@@ -8,7 +8,7 @@
 /**
  * Description of a return item for this menu.
  */
-static const std::string return_item_description = "Return from current menu";
+static const std::string return_item_description = "Return to previous menu";
 
 /**
  * Command triggering a return item for this menu.
@@ -18,9 +18,12 @@ static const std::string return_item_command = "return";
 Menu::Menu(std::string description, std::string command):
 	AbstractMenuItem(description, command)
 {
+	//this is deallocated in Menu destructor
 	this->item_map = new std::map<std::string, AbstractMenuItem*>();
+
+	//this is also deallocated in Menu destructor
 	this->return_command_object = new MenuCommand(
-		new ReturnAction(),
+		new ReturnAction(), //this is deallocated in MenuCommand destructor
 		return_item_description,
 		return_item_command
 	);
@@ -35,7 +38,9 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 	AbstractMenuItem(description, command)
 {
 	this->item_map = item_map;
-	this->return_command_object = new MenuCommand(new ReturnAction(), "Return to previous menu", "return");
+
+	//first allocation is freed in Menu destructor, second in MenuCommand destructor
+	this->return_command_object = new MenuCommand(new ReturnAction(), return_item_description , return_item_command);
 	insert_item_into_map(item_map, return_command_object);;
 
 	std::cout << "Map parametrized Menu constructor, " << command << "\n";
@@ -49,8 +54,12 @@ Menu::~Menu()
 
 	for (; destructing_iterator != item_map->end(); ++destructing_iterator)
 	{
-		delete destructing_iterator->second;
+		delete destructing_iterator->second; //deallocate the memory of the menu item
+		item_map->erase(destructing_iterator); //delete the item from the map
 	}
+
+	delete return_command_object; //deallocate
+	delete item_map;
 }
 
 void Menu::print_options()
@@ -86,6 +95,8 @@ AbstractMenuItem* Menu::choose_option()
 
 void Menu::run()
 {
+	std::cout << description << "\t" << command << "\n";
+
 	AbstractMenuItem* chosen_item;
 
 	do
@@ -105,7 +116,7 @@ void Menu::run()
 	} while (chosen_item != return_command_object);
 }
 
-void Menu::add_new_item(AbstractMenuItem* new_item)
+void Menu::add_item(AbstractMenuItem* new_item)
 {
 	insert_item_into_map(item_map, new_item);
 }

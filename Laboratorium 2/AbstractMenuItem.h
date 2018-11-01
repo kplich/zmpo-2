@@ -5,21 +5,20 @@
  * Generic class for implementing a runnable menu item.
  * <b>Not mutable!</b>
  */
-//TODO: is it exactly 'pure virtual'?
 class AbstractMenuItem
 {
 public:
 	AbstractMenuItem(const std::string description, const std::string command);
 
-	//TODO: shouldn't it actually be virtual???
 	/**
-	 * Destructor. Must be implemented by subclasses.
+	 * Virtual destructor.
 	 */
 	virtual ~AbstractMenuItem();
 
 	/**
-	 * Virtual method that performs some action.
+	 * Virtual method that runs the menu or performs an action.
 	 */
+	//Pure virtual method makes the class abstract.
 	virtual void run() = 0;
 
 	/**

@@ -1,7 +1,6 @@
 #pragma once
-#include "VirtualAction.h"
-class DefaultAction:
-	public VirtualAction
+#include "AbstractAction.h"
+class DefaultAction: public AbstractAction
 {
 public:
 	DefaultAction();

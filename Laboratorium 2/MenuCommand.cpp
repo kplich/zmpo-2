@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MenuCommand.h"
 #include <iostream>
+#include "DefaultAction.h"
 
 
 MenuCommand::~MenuCommand()
@@ -10,7 +11,7 @@ MenuCommand::~MenuCommand()
 	delete action;
 }
 
-MenuCommand::MenuCommand(VirtualAction* action, std::string description, std::string command) : AbstractMenuItem(description, command)
+MenuCommand::MenuCommand(AbstractAction* action, std::string description, std::string command) : AbstractMenuItem(description, command)
 {
 	this->action = action;
 
@@ -25,7 +26,7 @@ void MenuCommand::run()
 	}
 	else
 	{
-		//TODO: some "empty command"??? WTF?
+		(new DefaultAction())->perform_action();
 	}
 
 }

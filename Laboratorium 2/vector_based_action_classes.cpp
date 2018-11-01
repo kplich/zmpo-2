@@ -14,7 +14,6 @@ AddTable::~AddTable()
 	std::cout << "AddTable action destructor.\n";
 }
 
-//TODO: more complex implementation
 void AddTable::perform_action() const
 {
 	add_table(table_vector);

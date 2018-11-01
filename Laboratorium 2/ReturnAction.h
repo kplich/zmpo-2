@@ -1,8 +1,8 @@
 #pragma once
-#include "VirtualAction.h"
+#include "AbstractAction.h"
 
 class ReturnAction:
-	public VirtualAction
+	public AbstractAction
 {
 public:
 	ReturnAction();

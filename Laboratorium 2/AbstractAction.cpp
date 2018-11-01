@@ -1,15 +1,14 @@
 #include "pch.h"
-#include "VirtualAction.h"
+#include "AbstractAction.h"
 #include <iostream>
 
 
-VirtualAction::VirtualAction()
+AbstractAction::AbstractAction()
 {
 	std::cout << "Virtual action constructor.\n";
 }
 
-VirtualAction::~VirtualAction()
+AbstractAction::~AbstractAction()
 {
 	std::cout << "Virtual action destructor.\n";
 }
-//TODO: should a destructor be here?
