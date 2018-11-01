@@ -1,10 +1,10 @@
 #pragma once
-#include "VirtualMenuItem.h"
+#include "AbstractMenuItem.h"
 #include <vector>
 #include <map>
 #include "MenuCommand.h"
 
-class Menu : public VirtualMenuItem
+class Menu : public AbstractMenuItem
 {
 public:
 	/**
@@ -15,7 +15,7 @@ public:
 	/**
 	 * Parametrized constructor based on a <b>map</b> of menu items
 	 */
-	Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command);
+	Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command);
 
 	//TODO: what to implement here?
 	~Menu();
@@ -29,16 +29,16 @@ public:
 	 * Allows for adding a new menu item.
 	 * @param new_item pointer to new item to be added
 	 */
-	void add_new_item(VirtualMenuItem* new_item);
+	void add_new_item(AbstractMenuItem* new_item);
 
-	void delete_item(std::string);
+	void delete_item(std::string item_command);
 
 private:
 
 	/**
 	 * Map of menu items and their commands - both submenus and commands.
 	 */
-	std::map<std::string, VirtualMenuItem*>* item_map;
+	std::map<std::string, AbstractMenuItem*>* item_map;
 
 	/**
 	 * Prints all menu items and their commands
@@ -49,14 +49,14 @@ private:
 	 * Method for choosing a command or submenu.
 	 * @return pointer to chosen menu item
 	 */
-	VirtualMenuItem* choose_option();
+	AbstractMenuItem* choose_option();
 
 	/**
 	 * Helper method to simplify inserting VirtualMenuItems into a map
 	 * @param item_map map of items into which we insert the new item
 	 * @param menu_item item that we're inserting
 	 */
-	void insert_item_into_map(std::map<std::string, VirtualMenuItem*>* item_map, VirtualMenuItem* menu_item);
+	void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item);
 
 	/**
 	 * Command object that makes the user leave the current menu.

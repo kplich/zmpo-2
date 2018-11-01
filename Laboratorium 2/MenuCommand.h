@@ -1,10 +1,11 @@
 #pragma once
-#include "VirtualMenuItem.h"
+#include "AbstractMenuItem.h"
 #include "VirtualAction.h"
 
-class MenuCommand : public VirtualMenuItem
+class MenuCommand : public AbstractMenuItem
 {
 public:
+	//TODO: allow for default action
 	/**
 	 * Parametrized constructor.
 	 */

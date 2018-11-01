@@ -5,11 +5,15 @@
 
 ReturnAction::ReturnAction()
 {
+	std::cout << "Return action constructor.\n";
+
 }
 
 
 ReturnAction::~ReturnAction()
 {
+	std::cout << "Return action destructor.\n";
+
 }
 
 void ReturnAction::perform_action() const

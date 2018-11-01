@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "VirtualMenuItem.h"
+#include "AbstractMenuItem.h"
 #include <vector>
 #include "../../Laboratorium 1/Laboratorium 1/Table.h"
 
-VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector);
+AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector);
 
-VirtualMenuItem* get_editing_menu(std::vector<Table*>* table_vector);
+AbstractMenuItem* get_editing_menu(std::vector<Table*>* table_vector);

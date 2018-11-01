@@ -6,21 +6,20 @@
  * <b>Not mutable!</b>
  */
 //TODO: is it exactly 'pure virtual'?
-class VirtualMenuItem
+class AbstractMenuItem
 {
 public:
-	VirtualMenuItem(const std::string description, const std::string command);
+	AbstractMenuItem(const std::string description, const std::string command);
 
 	//TODO: shouldn't it actually be virtual???
 	/**
 	 * Destructor. Must be implemented by subclasses.
 	 */
-	virtual ~VirtualMenuItem();
+	virtual ~AbstractMenuItem();
 
 	/**
 	 * Virtual method that performs some action.
 	 */
-	//TODO: should this really return void?
 	virtual void run() = 0;
 
 	/**

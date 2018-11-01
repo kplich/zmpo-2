@@ -10,7 +10,7 @@ MenuCommand::~MenuCommand()
 	delete action;
 }
 
-MenuCommand::MenuCommand(VirtualAction* action, std::string description, std::string command) : VirtualMenuItem(description, command)
+MenuCommand::MenuCommand(VirtualAction* action, std::string description, std::string command) : AbstractMenuItem(description, command)
 {
 	this->action = action;
 

@@ -1,12 +1,12 @@
 #pragma once
 #include "VirtualAction.h"
-
-class ReturnAction:
+class DefaultAction:
 	public VirtualAction
 {
 public:
-	ReturnAction();
-	~ReturnAction();
+	DefaultAction();
+	virtual ~DefaultAction();
+
 	void perform_action() const override;
 };
 

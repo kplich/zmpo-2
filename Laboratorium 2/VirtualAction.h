@@ -10,7 +10,7 @@ public:
 	/**
 	 * Default constructor, for subclasses to invoke.
 	 */
-	//TODO: like constructor in VirtualMenuItem - does this has to be here?
+	//TODO: like constructor in AbstractMenuItem - does this has to be here?
 	VirtualAction();
 
 	/**

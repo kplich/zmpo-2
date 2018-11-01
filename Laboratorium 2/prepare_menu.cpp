@@ -5,44 +5,44 @@
 #include "vector_based_action_classes.h"
 
 //TODO: actions aren't really reusable!!!
-VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
+AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
 	Menu* main_menu = new Menu("Open main menu", "main_menu");
 
-	VirtualMenuItem* add_table = new MenuCommand(
+	AbstractMenuItem* add_table = new MenuCommand(
 		new AddTable(table_vector),
 		"Add a new table",
 		"add"
 	);
 
-	VirtualMenuItem* print_one = new MenuCommand(
+	AbstractMenuItem* print_one = new MenuCommand(
 		new PrintOneTable(table_vector),
 		"Print one of the tables",
 		"print one"
 	);
 
-	VirtualMenuItem* print_all = new MenuCommand(
+	AbstractMenuItem* print_all = new MenuCommand(
 		new PrintAllTables(table_vector),
 		"Print all tables",
 		"print all"
 	);
 
 	//TODO: not exactly how it should be!
-	VirtualMenuItem* edit_table = get_editing_menu(table_vector);
+	AbstractMenuItem* edit_table = get_editing_menu(table_vector);
 
-	VirtualMenuItem* clone_table = new MenuCommand(
+	AbstractMenuItem* clone_table = new MenuCommand(
 		new CloneTable(table_vector),
 		"Clone chosen table",
 		"clone"
 	);
 
-	VirtualMenuItem* delete_one_table = new MenuCommand(
+	AbstractMenuItem* delete_one_table = new MenuCommand(
 		new DeleteOneTable(table_vector),
 		"Delete single, chosen table",
 		"delete one"
 	);
 
-	VirtualMenuItem* delete_all_tables = new MenuCommand(
+	AbstractMenuItem* delete_all_tables = new MenuCommand(
 		new DeleteAllTables(table_vector),
 		"Delete all tables",
 		"delete all"
@@ -60,23 +60,23 @@ VirtualMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 	return main_menu;
 }
 
-VirtualMenuItem* get_editing_menu(std::vector<Table*>* table_vector)
+AbstractMenuItem* get_editing_menu(std::vector<Table*>* table_vector)
 {
 	Menu* editing_menu = new Menu("Edit table", "edit");
 
-	VirtualMenuItem* rename_table = new MenuCommand(
+	AbstractMenuItem* rename_table = new MenuCommand(
 		new RenameTable(table_vector),
 		"Rename chosen table",
 		"rename"
 	);
 
-	VirtualMenuItem* resize_table = new MenuCommand(
+	AbstractMenuItem* resize_table = new MenuCommand(
 		new ResizeTable(table_vector),
 		"Resize chosen table",
 		"resize"
 	);
 
-	VirtualMenuItem* put_value = new MenuCommand(
+	AbstractMenuItem* put_value = new MenuCommand(
 		new PutValue(table_vector),
 		"Put value into the chosen table",
 		"put value"

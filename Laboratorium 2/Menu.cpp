@@ -16,9 +16,9 @@ static const std::string return_item_description = "Return from current menu";
 static const std::string return_item_command = "return";
 
 Menu::Menu(std::string description, std::string command):
-	VirtualMenuItem(description, command)
+	AbstractMenuItem(description, command)
 {
-	this->item_map = new std::map<std::string, VirtualMenuItem*>();
+	this->item_map = new std::map<std::string, AbstractMenuItem*>();
 	this->return_command_object = new MenuCommand(
 		new ReturnAction(),
 		return_item_description,
@@ -31,8 +31,8 @@ Menu::Menu(std::string description, std::string command):
 }
 
 
-Menu::Menu(std::map<std::string, VirtualMenuItem*>* item_map, std::string description, std::string command):
-	VirtualMenuItem(description, command)
+Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command):
+	AbstractMenuItem(description, command)
 {
 	this->item_map = item_map;
 	this->return_command_object = new MenuCommand(new ReturnAction(), "Return to previous menu", "return");
@@ -45,7 +45,7 @@ Menu::~Menu()
 {
 	std::cout << "Menu Destructor, " << command << "\n";
 
-	std::map<std::string, VirtualMenuItem*>::iterator destructing_iterator = item_map->begin();
+	std::map<std::string, AbstractMenuItem*>::iterator destructing_iterator = item_map->begin();
 
 	for (; destructing_iterator != item_map->end(); ++destructing_iterator)
 	{
@@ -57,7 +57,7 @@ void Menu::print_options()
 {
 	std::cout << "\nAvailable options:\n";
 
-	std::map<std::string, VirtualMenuItem*>::iterator temp_iterator = item_map->begin();
+	std::map<std::string, AbstractMenuItem*>::iterator temp_iterator = item_map->begin();
 
 	for ( ; temp_iterator != item_map->end(); ++temp_iterator)
 	{
@@ -67,11 +67,11 @@ void Menu::print_options()
 	std::cout << "\n";
 }
 
-VirtualMenuItem* Menu::choose_option()
+AbstractMenuItem* Menu::choose_option()
 {
 	std::string chosen_command = get_user_input();
 
-	std::map<std::string, VirtualMenuItem*>::iterator found_pair = item_map->find(chosen_command);
+	std::map<std::string, AbstractMenuItem*>::iterator found_pair = item_map->find(chosen_command);
 
 	if(found_pair != item_map->end())
 	{
@@ -86,7 +86,7 @@ VirtualMenuItem* Menu::choose_option()
 
 void Menu::run()
 {
-	VirtualMenuItem* chosen_item;
+	AbstractMenuItem* chosen_item;
 
 	do
 	{
@@ -105,17 +105,21 @@ void Menu::run()
 	} while (chosen_item != return_command_object);
 }
 
-void Menu::add_new_item(VirtualMenuItem* new_item)
+void Menu::add_new_item(AbstractMenuItem* new_item)
 {
 	insert_item_into_map(item_map, new_item);
 }
 
-void Menu::delete_item(std::string)
+void Menu::delete_item(std::string item_command)
 {
-	//TODO: implement!
+	AbstractMenuItem* deleted_item = item_map->find(item_command)->second;
+
+	item_map->erase(item_map->find(item_command));
+
+	delete deleted_item;
 }
 
-void Menu::insert_item_into_map(std::map<std::string, VirtualMenuItem*>* item_map, VirtualMenuItem* menu_item)
+void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item)
 {
-	item_map->insert(std::pair<std::string, VirtualMenuItem*>(menu_item->get_command(), menu_item));
+	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
 }
