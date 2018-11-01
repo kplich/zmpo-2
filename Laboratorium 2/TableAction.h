@@ -10,6 +10,7 @@ class TableAction : public AbstractAction
 {
 public:
 	TableAction(std::vector<Table*>* table_vector);
+
 	virtual ~TableAction();
 
 	/**

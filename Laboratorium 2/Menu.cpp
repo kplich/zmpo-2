@@ -29,8 +29,6 @@ Menu::Menu(std::string description, std::string command):
 	);
 
 	insert_item_into_map(item_map, return_command_object);
-
-	std::cout << "Not-map parametrized Menu constructor, " << command << "\n";
 }
 
 
@@ -42,14 +40,10 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 	//first allocation is freed in Menu destructor, second in MenuCommand destructor
 	this->return_command_object = new MenuCommand(new ReturnAction(), return_item_description , return_item_command);
 	insert_item_into_map(item_map, return_command_object);;
-
-	std::cout << "Map parametrized Menu constructor, " << command << "\n";
 }
 
 Menu::~Menu()
 {
-	std::cout << "Menu Destructor, " << command << "\n";
-
 	std::map<std::string, AbstractMenuItem*>::iterator destructing_iterator = item_map->begin();
 
 	for (; destructing_iterator != item_map->end(); ++destructing_iterator)

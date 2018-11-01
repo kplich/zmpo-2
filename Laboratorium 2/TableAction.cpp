@@ -5,7 +5,6 @@
 TableAction::TableAction(std::vector<Table*>* table_vector):
 	table_vector(table_vector)
 {
-
 }
 
 
