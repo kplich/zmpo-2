@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "MenuCommand.h"
+#include "Command.h"
 #include "DefaultAction.h"
 
 
-MenuCommand::~MenuCommand()
+Command::~Command()
 {
 	delete action;
 }
 
-MenuCommand::MenuCommand(AbstractAction* action, std::string description, std::string command) : AbstractMenuItem(description, command)
+Command::Command(AbstractAction* action, std::string description, std::string command) : AbstractMenuItem(description, command)
 {
 	this->action = action;
 }
 
-void MenuCommand::run()
+void Command::run()
 {
 	if(action != nullptr)
 	{

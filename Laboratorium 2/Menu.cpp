@@ -22,7 +22,7 @@ Menu::Menu(std::string description, std::string command):
 	this->item_map = new std::map<std::string, AbstractMenuItem*>();
 
 	//this is also deallocated in Menu destructor
-	this->return_command_object = new MenuCommand(
+	this->return_command_object = new Command(
 		new ReturnAction(), //this is deallocated in MenuCommand destructor
 		return_item_description,
 		return_item_command
@@ -38,7 +38,7 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 	this->item_map = item_map;
 
 	//first allocation is freed in Menu destructor, second in MenuCommand destructor
-	this->return_command_object = new MenuCommand(new ReturnAction(), return_item_description , return_item_command);
+	this->return_command_object = new Command(new ReturnAction(), return_item_description , return_item_command);
 	insert_item_into_map(item_map, return_command_object);;
 }
 

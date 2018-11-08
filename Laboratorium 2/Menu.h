@@ -2,7 +2,7 @@
 #include "AbstractMenuItem.h"
 #include <vector>
 #include <map>
-#include "MenuCommand.h"
+#include "Command.h"
 
 class Menu : public AbstractMenuItem
 {
@@ -68,5 +68,5 @@ private:
 	 * Command object that makes the user leave the current menu.
 	 * It's kept as a part of a menu for later comparison.
 	 */
-	MenuCommand* return_command_object;
+	Command* return_command_object;
 };

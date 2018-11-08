@@ -2,23 +2,23 @@
 #include "AbstractMenuItem.h"
 #include "AbstractAction.h"
 
-class MenuCommand : public AbstractMenuItem
+class Command : public AbstractMenuItem
 {
 public:
 	/**
 	 * Parametrized constructor.
 	 */
-	MenuCommand(AbstractAction* action, std::string description, std::string command);
+	Command(AbstractAction* action, std::string description, std::string command);
 
 	/**
 	 * Destructor.
 	 */
-	~MenuCommand();
+	~Command();
 
 	/**
 	 * Performs action defined in the action object if it's well-defined.
 	 */
-	void run();
+	void run() override;
 
 private:
 	/**
