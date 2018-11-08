@@ -44,13 +44,7 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 
 Menu::~Menu()
 {
-	std::map<std::string, AbstractMenuItem*>::iterator destructing_iterator = item_map->begin();
-
-	for (; destructing_iterator != item_map->end(); ++destructing_iterator)
-	{
-		delete destructing_iterator->second; //deallocate the memory of the menu item
-		item_map->erase(destructing_iterator); //delete the item from the map
-	}
+	item_map->clear();
 
 	delete return_command_object; //deallocate
 	delete item_map;
