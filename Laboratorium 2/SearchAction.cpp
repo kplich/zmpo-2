@@ -20,7 +20,7 @@ void SearchAction::perform_action() const
 
 	//deallocated at the end of the method
 	std::vector<std::string>* paths_found = new std::vector<std::string>();
-	root_menu->search_for_command(user_input, paths_and_items_found);
+	root_menu->search_for_command(user_input, paths_found);
 
 
 	std::vector<std::string>::iterator paths_found_iterator = paths_found->begin();
