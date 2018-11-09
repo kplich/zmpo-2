@@ -45,7 +45,7 @@ public:
 	 * @param item_map map for storing items found so far and adding new ones
 	 */
 	//TODO: should this really be public?
-	void search_for_command(std::string command_name, std::map<std::string, AbstractMenuItem*>* item_map);
+	void search_for_command(std::string command_name, std::vector<std::string>* found_paths);
 
 private:
 
@@ -72,10 +72,10 @@ private:
 
 	/**
 	 * Helper method to simplify inserting VirtualMenuItems into a map
-	 * @param item_map map of items into which we insert the new item
+	 * @param found_items map of items into which we insert the new item
 	 * @param menu_item item that we're inserting
 	 */
-	void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item);
+	void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* found_items, AbstractMenuItem* menu_item);
 
 	/**
 	 * Command object that makes the user leave the current menu.

@@ -101,11 +101,11 @@ AbstractMenuItem* Menu::choose_option()
 	//TODO: allow for choosing return, help and search
 	std::string chosen_command = get_user_input();
 
-	std::map<std::string, AbstractMenuItem*>::iterator found_pair = item_map->find(chosen_command);
+	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(chosen_command);
 
-	if(found_pair != item_map->end())
+	if(find_iterator != item_map->end())
 	{
-		return found_pair->second;
+		return find_iterator->second;
 	}
 	else
 	{
@@ -113,9 +113,29 @@ AbstractMenuItem* Menu::choose_option()
 	}
 }
 
-void Menu::search_for_command(std::string command_name, std::map<std::string, AbstractMenuItem*>* item_map)
+void Menu::search_for_command(std::string command_name, std::vector<std::string>* found_paths)
 {
-	//TODO: implement that
+	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(command_name);
+
+	if (find_iterator != item_map->end())
+	{
+		found_paths->push_back(find_iterator->second->get_path());
+	}
+
+	std::map<std::string, AbstractMenuItem*>::iterator search_deeper_iterator = item_map->begin();
+
+	while (search_deeper_iterator != item_map->end())
+	{
+		//from Wikipedia: "(...) the result of a static_cast from a pointer of a virtual base class to a pointer of a derived class is undefined."
+		//we don't know, if the pointer from iterator points to a menu or a command,
+		//so we use a dynamic conversion
+		Menu* possible_menu_item = dynamic_cast<Menu*>(search_deeper_iterator->second);
+
+		if (possible_menu_item != NULL)
+		{
+			possible_menu_item->search_for_command(command_name, found_paths);
+		}
+	}
 }
 
 
