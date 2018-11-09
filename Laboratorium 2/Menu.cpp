@@ -15,7 +15,7 @@ static const std::string return_item_description = "Return to previous menu";
  */
 static const std::string return_item_command = "return";
 
-Menu::Menu(std::string description, std::string command):
+Menu::Menu(std::string description, std::string command, Menu* root_menu):
 	AbstractMenuItem(description, command)
 {
 	//this is deallocated in Menu destructor
@@ -29,17 +29,21 @@ Menu::Menu(std::string description, std::string command):
 	);
 
 	insert_item_into_map(item_map, return_command_object);
+
+	this->root_menu = root_menu;
 }
 
 
-Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command):
+Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu):
 	AbstractMenuItem(description, command)
 {
 	this->item_map = item_map;
 
 	//first allocation is freed in Menu destructor, second in MenuCommand destructor
 	this->return_command_object = new Command(new ReturnAction(), return_item_description , return_item_command);
-	insert_item_into_map(item_map, return_command_object);;
+	insert_item_into_map(item_map, return_command_object);
+
+	this->root_menu = root_menu;
 }
 
 Menu::~Menu()

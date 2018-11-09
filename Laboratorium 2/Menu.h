@@ -10,12 +10,12 @@ public:
 	/**
 	 * Constructor not based on a map - menus can be expanded during runtime
 	 */
-	Menu(std::string description, std::string command);
+	Menu(std::string description, std::string command, Menu* root_menu);
 
 	/**
 	 * Parametrized constructor based on a <b>map</b> of menu items
 	 */
-	Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command);
+	Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu);
 
 	/**
 	 * All resources are released here - each menu item, including the return item, and the map itself.
@@ -45,6 +45,11 @@ private:
 	 * Map of menu items and their commands - both submenus and commands.
 	 */
 	std::map<std::string, AbstractMenuItem*>* item_map;
+
+	/**
+	 * Pointer to the root menu.
+	 */
+	Menu* root_menu;
 
 	/**
 	 * Prints all menu items and their commands
