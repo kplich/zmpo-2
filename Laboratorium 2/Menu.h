@@ -42,7 +42,7 @@ public:
 	/**
 	 * Method for searching for a menu item in the whole subtree (invoked recursively)
 	 * @param command_name name of the command to find
-	 * @param item_map map for storing items found so far and adding new ones
+	 * @param found_paths map for storing items found so far and adding new ones
 	 */
 	//TODO: should this really be public?
 	void search_for_command(std::string command_name, std::vector<std::string>* found_paths);
