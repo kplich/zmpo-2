@@ -8,7 +8,7 @@ public:
 	/**
 	 * Parametrized constructor.
 	 */
-	Command(AbstractAction* action, std::string description, std::string command);
+	Command(AbstractAction* action, std::string description, std::string command, std::string parent_path);;
 
 	/**
 	 * Destructor.

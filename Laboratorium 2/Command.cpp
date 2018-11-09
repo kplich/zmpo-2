@@ -8,7 +8,8 @@ Command::~Command()
 	delete action;
 }
 
-Command::Command(AbstractAction* action, std::string description, std::string command) : AbstractMenuItem(description, command)
+Command::Command(AbstractAction* action, std::string description, std::string command, std::string parent_path):
+	AbstractMenuItem(description, command, parent_path)
 {
 	this->action = action;
 }

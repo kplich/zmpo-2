@@ -14,19 +14,22 @@ AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 	AbstractMenuItem* add_table = new Command(
 		new AddTable(table_vector),
 		"Add a new table",
-		"add"
+		"add",
+		main_menu->get_path()
 	);
 
 	AbstractMenuItem* print_one = new Command(
 		new PrintOneTable(table_vector),
 		"Print one of the tables",
-		"print one"
+		"print one",
+		main_menu->get_path()
 	);
 
 	AbstractMenuItem* print_all = new Command(
 		new PrintAllTables(table_vector),
 		"Print all tables",
-		"print all"
+		"print all",
+		main_menu->get_path()
 	);
 
 	AbstractMenuItem* edit_table = get_editing_menu(table_vector, main_menu, main_menu->get_path());
@@ -34,19 +37,22 @@ AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 	AbstractMenuItem* clone_table = new Command(
 		new CloneTable(table_vector),
 		"Clone chosen table",
-		"clone"
+		"clone",
+		main_menu->get_path()
 	);
 
 	AbstractMenuItem* delete_one_table = new Command(
 		new DeleteOneTable(table_vector),
 		"Delete single, chosen table",
-		"delete one"
+		"delete one",
+		main_menu->get_path()
 	);
 
 	AbstractMenuItem* delete_all_tables = new Command(
 		new DeleteAllTables(table_vector),
 		"Delete all tables",
-		"delete all"
+		"delete all",
+		main_menu->get_path()
 	);
 
 	main_menu->add_item(add_table);
@@ -67,19 +73,22 @@ AbstractMenuItem* get_editing_menu(std::vector<Table*>* table_vector, Menu* main
 	AbstractMenuItem* rename_table = new Command(
 		new RenameTable(table_vector),
 		"Rename chosen table",
-		"rename"
+		"rename",
+		editing_menu->get_path()
 	);
 
 	AbstractMenuItem* resize_table = new Command(
 		new ResizeTable(table_vector),
 		"Resize chosen table",
-		"resize"
+		"resize",
+		editing_menu->get_path()
 	);
 
 	AbstractMenuItem* put_value = new Command(
 		new PutValue(table_vector),
 		"Put value into the chosen table",
-		"put value"
+		"put value",
+		editing_menu->get_path()
 	);
 
 	editing_menu->add_item(rename_table);
