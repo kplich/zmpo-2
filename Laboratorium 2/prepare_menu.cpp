@@ -8,7 +8,7 @@
 //TODO: not nice menu building
 AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
-	//TODO: brzydki nullptr here
+	//TODO: ugly nullptr here
 	Menu* main_menu = new Menu("Open main menu", "main_menu", nullptr, "main menu");
 
 	AbstractMenuItem* add_table = new Command(

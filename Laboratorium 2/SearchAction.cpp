@@ -16,6 +16,8 @@ SearchAction::~SearchAction()
 
 void SearchAction::perform_action() const
 {
+	std::cout << "Enter the command to look for: \n";
+
 	std::string user_input = get_user_input();
 
 	//deallocated at the end of the method
@@ -23,10 +25,18 @@ void SearchAction::perform_action() const
 	root_menu->search_for_command(user_input, paths_found);
 
 
-	std::vector<std::string>::iterator paths_found_iterator = paths_found->begin();
-	while(paths_found_iterator != paths_found->end())
+	if(paths_found->empty())
 	{
-		std::cout << *paths_found_iterator << "\n";
+		std::cout << "No such command found.\n";
+	}
+	else
+	{
+		std::vector<std::string>::iterator paths_found_iterator = paths_found->begin();
+		while (paths_found_iterator != paths_found->end())
+		{
+			std::cout << *paths_found_iterator << "\n";
+			++paths_found_iterator;
+		}
 	}
 
 	delete paths_found;

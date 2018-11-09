@@ -6,6 +6,7 @@
 #include "input_output.h"
 #include "SearchAction.h"
 
+//TODO: this really shouldn't be here
 /**
  * Description of a return item for this menu.
  */
@@ -48,10 +49,15 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 		this->get_path()
 	);
 
-	//TODO: delete this
-	insert_item_into_map(item_map, return_command_object);
-
-	this->root_menu = root_menu;
+	//TODO: wrr, ugly!
+	if (root_menu == nullptr)
+	{
+		this->root_menu = this;
+	}
+	else
+	{
+		this->root_menu = root_menu;
+	}
 }
 
 
@@ -68,17 +74,16 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 		this->get_path()
 	);
 
-	//TODO: delete this
-	insert_item_into_map(item_map, return_command_object);
-
 	this->root_menu = root_menu;
 }
 
 Menu::~Menu()
 {
+	//TODO: this probably doesn't call destructors!
 	item_map->clear();
 
 	delete return_command_object; //deallocate
+	delete search_command_object;
 	delete item_map;
 }
 
@@ -100,6 +105,16 @@ AbstractMenuItem* Menu::choose_option()
 {
 	//TODO: allow for choosing return, help and search
 	std::string chosen_command = get_user_input();
+
+	if (chosen_command == return_item_command)
+	{
+		return return_command_object;
+	}
+	
+	if (chosen_command == search_item_command)
+	{
+		return search_command_object;
+	}
 
 	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(chosen_command);
 
@@ -135,6 +150,8 @@ void Menu::search_for_command(std::string command_name, std::vector<std::string>
 		{
 			possible_menu_item->search_for_command(command_name, found_paths);
 		}
+
+		++search_deeper_iterator;
 	}
 }
 
