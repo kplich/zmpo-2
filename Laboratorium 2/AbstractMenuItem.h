@@ -8,7 +8,7 @@
 class AbstractMenuItem
 {
 public:
-	AbstractMenuItem(const std::string description, const std::string command);
+	AbstractMenuItem(std::string description, std::string command, std::string parent_path);
 
 	/**
 	 * Virtual destructor.
@@ -25,23 +25,35 @@ public:
 	 * Returns the command used to run the item.
 	 * @return command used to run the item
 	 */
-	std::string get_command() const;
+	std::string get_command();
 
 	/**
 	 * Returns description of the item.
 	 * @return string containing short description of the item
 	 */
-	std::string get_description() const;
+	std::string get_description();
+
+	/**
+	 * Returns the path from root menu to the item.
+	 * @return description of the path to the item in the form
+	 *  root_menu -> <intermediate items> -> command
+	 */
+	std::string get_path();
 
 protected:
 	/**
 	 * Description of the menu or action performed.
 	 */
-	const std::string description;
+	std::string description;
 
 	/**
 	 * Command that will be used to perform an action.
 	 */
-	const std::string command;
+	std::string command;
+
+	/**
+	 * Path in the menu to an object.
+	 */
+	std::string path;
 };
 
