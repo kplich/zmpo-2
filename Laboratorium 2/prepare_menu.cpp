@@ -5,10 +5,11 @@
 #include "vector_based_action_classes.h"
 
 //all these allocations are deallocated in Menu and Command destructors
-
+//TODO: not nice menu building
 AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
-	Menu* main_menu = new Menu("Open main menu", "main_menu");
+	//TODO: brzydki nullptr here
+	Menu* main_menu = new Menu("Open main menu", "main_menu", nullptr, "main menu");
 
 	AbstractMenuItem* add_table = new Command(
 		new AddTable(table_vector),
@@ -28,7 +29,7 @@ AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 		"print all"
 	);
 
-	AbstractMenuItem* edit_table = get_editing_menu(table_vector);
+	AbstractMenuItem* edit_table = get_editing_menu(table_vector, main_menu, main_menu->get_path());
 
 	AbstractMenuItem* clone_table = new Command(
 		new CloneTable(table_vector),
@@ -59,9 +60,9 @@ AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 	return main_menu;
 }
 
-AbstractMenuItem* get_editing_menu(std::vector<Table*>* table_vector)
+AbstractMenuItem* get_editing_menu(std::vector<Table*>* table_vector, Menu* main_menu, std::string menu_path)
 {
-	Menu* editing_menu = new Menu("Edit table", "edit");
+	Menu* editing_menu = new Menu("Edit table", "edit", main_menu, menu_path);
 
 	AbstractMenuItem* rename_table = new Command(
 		new RenameTable(table_vector),

@@ -155,6 +155,7 @@
     <ClInclude Include="action_implementations.h" />
     <ClInclude Include="DefaultAction.h" />
     <ClInclude Include="input_output.h" />
+    <ClInclude Include="SearchAction.h" />
     <ClInclude Include="vector_based_action_classes.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Command.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="action_implementations.cpp" />
     <ClCompile Include="DefaultAction.cpp" />
     <ClCompile Include="input_output.cpp" />
+    <ClCompile Include="SearchAction.cpp" />
     <ClCompile Include="vector_based_action_classes.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
