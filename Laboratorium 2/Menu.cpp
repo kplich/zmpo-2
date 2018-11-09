@@ -31,6 +31,16 @@ static const std::string search_item_command = "search";
 Menu::Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
 {
+	//TODO: wrr, ugly!
+	if (root_menu == nullptr)
+	{
+		this->root_menu = this;
+	}
+	else
+	{
+		this->root_menu = root_menu;
+	}
+
 	//this is deallocated in Menu destructor
 	this->item_map = new std::map<std::string, AbstractMenuItem*>();
 
@@ -43,21 +53,11 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 	);
 
 	this->search_command_object = new Command(
-		new SearchAction(root_menu),
+		new SearchAction(this->root_menu),
 		search_item_description,
 		search_item_command,
 		this->get_path()
 	);
-
-	//TODO: wrr, ugly!
-	if (root_menu == nullptr)
-	{
-		this->root_menu = this;
-	}
-	else
-	{
-		this->root_menu = root_menu;
-	}
 }
 
 

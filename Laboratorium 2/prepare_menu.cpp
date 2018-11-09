@@ -9,7 +9,7 @@
 AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
 {
 	//TODO: ugly nullptr here
-	Menu* main_menu = new Menu("Open main menu", "main_menu", nullptr, "main menu");
+	Menu* main_menu = new Menu("Open main menu", "main_menu", nullptr, "");
 
 	AbstractMenuItem* add_table = new Command(
 		new AddTable(table_vector),
