@@ -10,12 +10,12 @@ public:
 	/**
 	 * Constructor not based on a map - menus can be expanded during runtime
 	 */
-	Menu(std::string description, std::string command, Menu* root_menu);
+	Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path);
 
 	/**
 	 * Parametrized constructor based on a <b>map</b> of menu items
 	 */
-	Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu);
+	Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu, std::string parent_path);
 
 	/**
 	 * All resources are released here - each menu item, including the return item, and the map itself.
@@ -66,7 +66,7 @@ private:
 	 * Method for searching for a menu item in the whole subtree (invoked recursively)
 	 * @command_name name of the command to find
 	 */
-	AbstractMenuItem* search_for_command(std::string command_name);
+	std::map<std::string, AbstractMenuItem*> search_for_command(std::string command_name);
 
 	/**
 	 * Helper method to simplify inserting VirtualMenuItems into a map
@@ -80,4 +80,9 @@ private:
 	 * It's kept as a part of a menu for later comparison.
 	 */
 	Command* return_command_object;
+
+	/**
+	 * Command object that allows for searching the menu.
+	 */
+	Command* search_command_object;
 };

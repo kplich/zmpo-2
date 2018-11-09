@@ -15,8 +15,8 @@ static const std::string return_item_description = "Return to previous menu";
  */
 static const std::string return_item_command = "return";
 
-Menu::Menu(std::string description, std::string command, Menu* root_menu):
-	AbstractMenuItem(description, command)
+Menu::Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path):
+	AbstractMenuItem(description, command, parent_path)
 {
 	//this is deallocated in Menu destructor
 	this->item_map = new std::map<std::string, AbstractMenuItem*>();
@@ -34,8 +34,8 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu):
 }
 
 
-Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu):
-	AbstractMenuItem(description, command)
+Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu, std::string parent_path):
+	AbstractMenuItem(description, command, parent_path)
 {
 	this->item_map = item_map;
 
@@ -84,9 +84,9 @@ AbstractMenuItem* Menu::choose_option()
 	}
 }
 
-AbstractMenuItem* Menu::search_for_command(std::string command_name)
+std::map<std::string, AbstractMenuItem*> Menu::search_for_command(std::string command_name)
 {
-
+	//TODO: implement that
 }
 
 
