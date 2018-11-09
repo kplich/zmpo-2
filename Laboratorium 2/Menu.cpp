@@ -4,6 +4,7 @@
 #include <iterator>
 #include "ReturnAction.h"
 #include "input_output.h"
+#include "SearchAction.h"
 
 /**
  * Description of a return item for this menu.
@@ -14,6 +15,17 @@ static const std::string return_item_description = "Return to previous menu";
  * Command triggering a return item for this menu.
  */
 static const std::string return_item_command = "return";
+
+/**
+ * Description of a search item for this menu.
+ */
+static const std::string search_item_description = "Search in whole menu.";
+
+/**
+ * Command triggering a search item for this menu.
+ */
+static const std::string search_item_command = "search";
+
 
 Menu::Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
@@ -29,6 +41,14 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 		this->get_path()
 	);
 
+	this->search_command_object = new Command(
+		new SearchAction(root_menu),
+		search_item_description,
+		search_item_command,
+		this->get_path()
+	);
+
+	//TODO: delete this
 	insert_item_into_map(item_map, return_command_object);
 
 	this->root_menu = root_menu;
@@ -47,6 +67,8 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 		return_item_command,
 		this->get_path()
 	);
+
+	//TODO: delete this
 	insert_item_into_map(item_map, return_command_object);
 
 	this->root_menu = root_menu;
@@ -76,6 +98,7 @@ void Menu::print_options()
 
 AbstractMenuItem* Menu::choose_option()
 {
+	//TODO: allow for choosing return, help and search
 	std::string chosen_command = get_user_input();
 
 	std::map<std::string, AbstractMenuItem*>::iterator found_pair = item_map->find(chosen_command);
@@ -90,7 +113,7 @@ AbstractMenuItem* Menu::choose_option()
 	}
 }
 
-std::map<std::string, AbstractMenuItem*> Menu::search_for_command(std::string command_name)
+void Menu::search_for_command(std::string command_name, std::map<std::string, AbstractMenuItem*>* item_map)
 {
 	//TODO: implement that
 }

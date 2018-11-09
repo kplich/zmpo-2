@@ -2,6 +2,8 @@
 #include "AbstractAction.h"
 #include "Menu.h"
 
+//TODO: is it actually acceptable to separately interpret 'search' and command to look for?
+
 /**
  * Action for searching the menu for items with a given command
  */
@@ -15,6 +17,5 @@ public:
 
 private:
 	Menu* root_menu;
-	std::map<std::string, AbstractMenuItem*>* found_items;
 };
 

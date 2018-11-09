@@ -39,6 +39,14 @@ public:
 	 */
 	void delete_item(std::string item_command);
 
+	/**
+	 * Method for searching for a menu item in the whole subtree (invoked recursively)
+	 * @param command_name name of the command to find
+	 * @param item_map map for storing items found so far and adding new ones
+	 */
+	//TODO: should this really be public?
+	void search_for_command(std::string command_name, std::map<std::string, AbstractMenuItem*>* item_map);
+
 private:
 
 	/**
@@ -61,12 +69,6 @@ private:
 	 * @return pointer to chosen menu item
 	 */
 	AbstractMenuItem* choose_option();
-
-	/**
-	 * Method for searching for a menu item in the whole subtree (invoked recursively)
-	 * @command_name name of the command to find
-	 */
-	std::map<std::string, AbstractMenuItem*> search_for_command(std::string command_name);
 
 	/**
 	 * Helper method to simplify inserting VirtualMenuItems into a map
