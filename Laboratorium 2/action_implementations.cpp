@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "action_implementations.h"
 #include <iostream>
-#include "../../Laboratorium 1/Laboratorium 1/editing_menu.h"
 #include "input_output.h"
 
 void print_all_tables(std::vector<Table*>* vector_of_tables)

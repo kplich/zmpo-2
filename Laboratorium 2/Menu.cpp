@@ -80,6 +80,11 @@ AbstractMenuItem* Menu::choose_option()
 	}
 }
 
+AbstractMenuItem* Menu::search_for_command(std::string command_name)
+{
+
+}
+
 
 void Menu::run()
 {

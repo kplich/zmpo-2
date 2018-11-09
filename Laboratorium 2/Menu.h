@@ -58,6 +58,12 @@ private:
 	AbstractMenuItem* choose_option();
 
 	/**
+	 * Method for searching for a menu item in the whole subtree (invoked recursively)
+	 * @command_name name of the command to find
+	 */
+	AbstractMenuItem* search_for_command(std::string command_name);
+
+	/**
 	 * Helper method to simplify inserting VirtualMenuItems into a map
 	 * @param item_map map of items into which we insert the new item
 	 * @param menu_item item that we're inserting
