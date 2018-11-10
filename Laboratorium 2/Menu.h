@@ -47,6 +47,18 @@ public:
 	//TODO: should this really be public?
 	void search_for_command(std::string command_name, std::vector<std::string>* found_paths);
 
+	/**
+	 * Returns a textual representation of the string.
+	 * @return a string in the format ("description","command";<child1>,<child2>,...)
+	 */
+	std::string to_string() override;
+
+	/**
+	 * Saves the menu to a text file.
+	 */
+	 //TODO: not entirely sure about this signature.
+	void save_menu();
+
 private:
 
 	/**

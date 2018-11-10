@@ -26,6 +26,8 @@ public:
 	 */
 	std::string get_help();
 
+	std::string to_string() override;
+
 private:
 	/**
 	 * Pointer to an action object.

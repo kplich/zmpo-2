@@ -40,6 +40,12 @@ public:
 	 */
 	std::string get_path();
 
+	/**
+	 * Returns a textual representation of a menu item.
+	 * @return textual representation of the menu item.
+	 */
+	virtual std::string to_string() = 0;
+
 protected:
 	/**
 	 * Description of the menu or action performed.

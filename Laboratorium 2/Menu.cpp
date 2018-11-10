@@ -7,6 +7,14 @@
 #include "SearchAction.h"
 #include "HelpAction.h"
 
+static const std::string begin_and_end_string = "'";
+static const std::string begin_menu = "(";
+static const std::string end_menu = ")";
+static const std::string description_command_separator = ",";
+static const std::string command_children_separator = ";";
+static const std::string children_separator = ",";
+static const std::string end_children = "eoc";
+
 //TODO: this really shouldn't be here
 static const std::string return_item_command = "return";
 static const std::string search_item_command = "search";
@@ -240,4 +248,29 @@ void Menu::delete_item(std::string item_command)
 void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item)
 {
 	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
+}
+
+std::string Menu::to_string()
+{
+	std::string result = 
+		begin_menu +
+		begin_and_end_string +
+		(this->description + 
+		begin_and_end_string +
+		description_command_separator +
+		begin_and_end_string +
+		this->command +
+		begin_and_end_string +
+		command_children_separator);
+
+	std::map<std::string, AbstractMenuItem*>::iterator iterator = item_map->begin();
+	for(; iterator != item_map->end(); ++iterator)
+	{
+		result += iterator->second->to_string();
+		result += children_separator;
+	}
+	result += end_children;
+	result += end_menu;
+
+	return result;
 }
