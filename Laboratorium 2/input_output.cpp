@@ -4,6 +4,8 @@
 #include <string>
 #include "input_output.h"
 
+//TODO: extract out strings
+
 std::string int_to_string(int number)
 {
 	std::ostringstream string_stream;

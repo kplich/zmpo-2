@@ -4,6 +4,8 @@
 #include <iostream>
 #include "vector_based_action_classes.h"
 
+//TODO: extract strings
+
 //all these allocations are deallocated in Menu and Command destructors
 //TODO: not nice menu building
 AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
