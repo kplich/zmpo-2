@@ -2,6 +2,7 @@
 #include "HelpAction.h"
 #include <iostream>
 #include "input_output.h"
+#include "Command.h"
 
 HelpAction::HelpAction(std::map<std::string, AbstractMenuItem*>* item_map)
 {
@@ -23,8 +24,17 @@ void HelpAction::perform_action() const
 
 	if(find_iterator != item_map->end())
 	{
-		std::cout << "Help for command " << user_input << ":\n";
-		std::cout << find_iterator->second->get_help();
+		//found item doesn't have to be of type Command, so we attempt a cast
+		Command* possible_command = dynamic_cast<Command*>(find_iterator->second);
+
+		if (possible_command != nullptr) {
+			std::cout << "Help for command " << user_input << ":\n";
+			std::cout << possible_command->get_help();
+		}
+		else
+		{
+			std::cout << "No such command found.\n";
+		}
 	}
 	else
 	{

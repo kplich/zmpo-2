@@ -8,7 +8,8 @@ public:
 	/**
 	 * Parametrized constructor.
 	 */
-	Command(AbstractAction* action, std::string description, std::string command, std::string parent_path);
+	Command(std::string description, std::string command, std::string parent_path,
+		    AbstractAction* action, std::string help);
 
 	/**
 	 * Destructor.
@@ -20,6 +21,9 @@ public:
 	 */
 	void run() override;
 
+	/**
+	 * Returns string containing help for a given command.
+	 */
 	std::string get_help();
 
 private:
@@ -28,6 +32,9 @@ private:
 	 */
 	AbstractAction* action;
 
+	/**
+	 * Additional information about the command.
+	 */
 	std::string help;
 };
 

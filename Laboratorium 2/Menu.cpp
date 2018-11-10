@@ -14,6 +14,9 @@ static const std::string help_item_command = "help";
 static const std::string return_item_description = "Return to previous menu";
 static const std::string search_item_description = "Search in whole menu.";
 static const std::string help_item_description = "Get help for a command in the menu.";
+static const std::string return_item_help = "Returns to previous menu";
+static const std::string search_item_help = "Returns all paths to items with given command.";
+static const std::string help_item_help = "Prints additional information about a given command.";
 
 static const std::string available_items = "Available options:";
 static const std::string no_item_found = "No option with given command found.";
@@ -37,26 +40,29 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 
 	//this is also deallocated in Menu destructor
 	this->return_item = new Command(
-		new ReturnAction(), //this is deallocated in Command destructor
 		return_item_description,
 		return_item_command,
-		this->get_path()
+		this->get_path(),
+		new ReturnAction(), //this is deallocated in Command destructor
+		return_item_help
 	);
 
 	//deallocated in Menu destructor
 	this->search_item = new Command(
-		new SearchAction(this->root_menu), //deallocated in Command destructor
 		search_item_description,
 		search_item_command,
-		this->get_path()
+		this->get_path(),
+		new SearchAction(this->root_menu), //deallocated in Command destructor
+		search_item_help
 	);
 
 	//deallocated in Menu destructor
 	this->help_item = new Command(
-		new HelpAction(this->item_map), //deallocated in Command destructor
 		help_item_description,
 		help_item_command,
-		this->get_path()
+		this->get_path(),
+		new HelpAction(this->item_map), //deallocated in Command destructor
+		help_item_help
 	);
 }
 
@@ -76,33 +82,37 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 
 	this->item_map = item_map;
 
-	//deallocated in Menu destructor, 
+	//this is also deallocated in Menu destructor
 	this->return_item = new Command(
-		new ReturnAction(), //deallocated in MenuCommand destructor
 		return_item_description,
 		return_item_command,
-		this->get_path()
+		this->get_path(),
+		new ReturnAction(), //this is deallocated in Command destructor
+		return_item_help
 	);
 
 	//deallocated in Menu destructor
 	this->search_item = new Command(
-		new SearchAction(this->root_menu), //deallocated in Command destructor
 		search_item_description,
 		search_item_command,
-		this->get_path()
+		this->get_path(),
+		new SearchAction(this->root_menu), //deallocated in Command destructor
+		search_item_help
 	);
 
 	//deallocated in Menu destructor
 	this->help_item = new Command(
-		new HelpAction(this->item_map), //deallocated in Command destructor
 		help_item_description,
 		help_item_command,
-		this->get_path()
+		this->get_path(),
+		new HelpAction(this->item_map), //deallocated in Command destructor
+		help_item_help
 	);
 }
 
 Menu::~Menu()
 {
+	//deallocate all items in the map and the map itself
 	std::map<std::string, AbstractMenuItem*>::iterator deleting_iterator = item_map->begin();
 
 	while(deleting_iterator != item_map->end())
@@ -111,11 +121,12 @@ Menu::~Menu()
 		++deleting_iterator;
 	}
 	item_map->clear();
+	delete item_map;
 
-	delete return_item; //deallocate
+	//deallocate special items
+	delete return_item;
 	delete search_item;
 	delete help_item;
-	delete item_map;
 }
 
 void Menu::print_options()
@@ -146,6 +157,10 @@ AbstractMenuItem* Menu::choose_option()
 	{
 		found_item = search_item;
 	}
+	if (user_input == help_item_command)
+	{
+		found_item = help_item;
+	}
 
 	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(user_input);
 	if(find_iterator != item_map->end())
@@ -174,7 +189,7 @@ void Menu::search_for_command(std::string command_name, std::vector<std::string>
 		//so we use a dynamic conversion
 		Menu* possible_menu_item = dynamic_cast<Menu*>(search_deeper_iterator->second);
 
-		if (possible_menu_item != NULL)
+		if (possible_menu_item != nullptr)
 		{
 			possible_menu_item->search_for_command(command_name, found_paths);
 		}
@@ -221,6 +236,7 @@ void Menu::delete_item(std::string item_command)
 	delete deleted_item;
 }
 
+//TODO: something about this???
 void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item)
 {
 	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));

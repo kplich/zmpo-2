@@ -8,10 +8,11 @@ Command::~Command()
 	delete action;
 }
 
-Command::Command(AbstractAction* action, std::string description, std::string command, std::string parent_path):
+Command::Command(std::string description, std::string command, std::string parent_path, AbstractAction* action, std::string help):
 	AbstractMenuItem(description, command, parent_path)
 {
 	this->action = action;
+	this->help = help;
 }
 
 void Command::run()
@@ -26,4 +27,10 @@ void Command::run()
 	}
 
 }
+
+std::string Command::get_help()
+{
+	return help;
+}
+
 
