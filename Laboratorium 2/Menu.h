@@ -81,10 +81,10 @@ private:
 	 * Command object that makes the user leave the current menu.
 	 * It's kept as a part of a menu for later comparison.
 	 */
-	Command* return_command_object;
+	Command* return_item;
 
 	/**
 	 * Command object that allows for searching the menu.
 	 */
-	Command* search_command_object;
+	Command* search_item;
 };

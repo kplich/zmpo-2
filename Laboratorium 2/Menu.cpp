@@ -7,25 +7,13 @@
 #include "SearchAction.h"
 
 //TODO: this really shouldn't be here
-/**
- * Description of a return item for this menu.
- */
 static const std::string return_item_description = "Return to previous menu";
-
-/**
- * Command triggering a return item for this menu.
- */
 static const std::string return_item_command = "return";
-
-/**
- * Description of a search item for this menu.
- */
 static const std::string search_item_description = "Search in whole menu.";
-
-/**
- * Command triggering a search item for this menu.
- */
 static const std::string search_item_command = "search";
+
+static const std::string available_items = "Available options:";
+static const std::string no_item_found = "No option with given command found.";
 
 
 Menu::Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path):
@@ -45,14 +33,14 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 	this->item_map = new std::map<std::string, AbstractMenuItem*>();
 
 	//this is also deallocated in Menu destructor
-	this->return_command_object = new Command(
+	this->return_item = new Command(
 		new ReturnAction(), //this is deallocated in MenuCommand destructor
 		return_item_description,
 		return_item_command,
 		this->get_path()
 	);
 
-	this->search_command_object = new Command(
+	this->search_item = new Command(
 		new SearchAction(this->root_menu),
 		search_item_description,
 		search_item_command,
@@ -64,32 +52,46 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
 {
+	//TODO: wrr, ugly!
+	if (root_menu == nullptr)
+	{
+		this->root_menu = this;
+	}
+	else
+	{
+		this->root_menu = root_menu;
+	}
+
 	this->item_map = item_map;
 
 	//deallocated in Menu destructor, 
-	this->return_command_object = new Command(
+	this->return_item = new Command(
 		new ReturnAction(), //deallocated in MenuCommand destructor
 		return_item_description,
 		return_item_command,
 		this->get_path()
 	);
-
-	this->root_menu = root_menu;
 }
 
 Menu::~Menu()
 {
-	//TODO: this probably doesn't call destructors!
+	std::map<std::string, AbstractMenuItem*>::iterator deleting_iterator = item_map->begin();
+
+	while(deleting_iterator != item_map->end())
+	{
+		delete deleting_iterator->second;
+		++deleting_iterator;
+	}
 	item_map->clear();
 
-	delete return_command_object; //deallocate
-	delete search_command_object;
+	delete return_item; //deallocate
+	delete search_item;
 	delete item_map;
 }
 
 void Menu::print_options()
 {
-	std::cout << "\nAvailable options:\n";
+	std::cout << "\n" << available_items << "\n";
 
 	std::map<std::string, AbstractMenuItem*>::iterator temp_iterator = item_map->begin();
 
@@ -97,7 +99,6 @@ void Menu::print_options()
 	{
 		std::cout << temp_iterator->second->get_description() << ":\t" << temp_iterator->first << "\n";
 	}
-
 	std::cout << "\n";
 }
 
@@ -108,12 +109,12 @@ AbstractMenuItem* Menu::choose_option()
 
 	if (chosen_command == return_item_command)
 	{
-		return return_command_object;
+		return return_item;
 	}
 	
 	if (chosen_command == search_item_command)
 	{
-		return search_command_object;
+		return search_item;
 	}
 
 	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(chosen_command);
@@ -169,14 +170,14 @@ void Menu::run()
 
 		if (chosen_item == nullptr)
 		{
-			std::cout << "No option with given command found.\n";
+			std::cout << no_item_found << "\n";
 		}
 		else
 		{
 			chosen_item->run();
 		}
 		
-	} while (chosen_item != return_command_object);
+	} while (chosen_item != return_item);
 }
 
 void Menu::add_item(AbstractMenuItem* new_item)
