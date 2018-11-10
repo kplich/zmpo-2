@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\Table.h" />
+    <ClInclude Include="..\ParsingStack\ParsingStack.h" />
     <ClInclude Include="action_implementations.h" />
     <ClInclude Include="DefaultAction.h" />
     <ClInclude Include="HelpAction.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\Table.cpp" />
+    <ClCompile Include="..\ParsingStack\ParsingStack.cpp" />
     <ClCompile Include="action_implementations.cpp" />
     <ClCompile Include="DefaultAction.cpp" />
     <ClCompile Include="HelpAction.cpp" />

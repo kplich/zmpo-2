@@ -1,4 +1,5 @@
-﻿#include "ParsingStack.h"
+﻿#include "pch.h"
+#include "ParsingStack.h"
 #include <string>
 
 ParsingStack::ParsingStack(std::string string)

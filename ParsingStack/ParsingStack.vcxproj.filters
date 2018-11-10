@@ -15,12 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ParsingStack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ParsingStack.cpp">
+    <ClCompile Include="test_parsing_stack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
