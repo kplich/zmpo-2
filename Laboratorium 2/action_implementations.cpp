@@ -3,27 +3,44 @@
 #include <iostream>
 #include "input_output.h"
 
+
+//TODO: extract out strings
+const std::string all_tables_message = "All tables:";
+
 void print_all_tables(std::vector<Table*>* vector_of_tables)
 {
-	std::cout << "Wszystkie tablice:\n";
-
-	for (int i = 0; i < vector_of_tables->size(); ++i)
+	if (vector_of_tables->empty())
 	{
-		std::cout << "index " << i << "\t" << vector_of_tables->at(i)->to_short_string() << std::endl;
+		std::cout << "Nie dodano zadnej tablicy.\n";
+	}
+	else
+	{
+		std::cout << all_tables_message << "\n";
+
+		for (int i = 0; i < vector_of_tables->size(); ++i)
+		{
+			std::cout << "index " << i << "\t" << vector_of_tables->at(i)->to_short_string() << std::endl;
+		}
 	}
 }
 
 void print_one_table(std::vector<Table*>* vector_of_tables)
 {
-	std::cout << "Któr¹ tabelê chcesz wyœwietliæ? (indeksy zaczynaj¹ siê od zera)\n";
+	if (vector_of_tables->empty())
+	{
+		std::cout << "Nie dodano zadnej tablicy.\n";
+	}
+	else
+	{
+		std::cout << "Któr¹ tabelê chcesz wyœwietliæ? (indeksy zaczynaj¹ siê od zera)\n";
 
-	int chosen_table_number = loop_until_valid_int(0, vector_of_tables->size() - 1);
+		int chosen_table_number = loop_until_valid_int(0, vector_of_tables->size() - 1);
 
-	//write out the table
-	std::cout << "Tablica nr: " << chosen_table_number << ":" << "\n";
-	std::cout << vector_of_tables->at(chosen_table_number)->to_full_string();
+		//write out the table
+		std::cout << "Tablica nr: " << chosen_table_number << ":" << "\n";
+		std::cout << vector_of_tables->at(chosen_table_number)->to_full_string();
+	}
 }
-
 void add_table(std::vector<Table*>* vector_of_tables)
 {
 	Table* new_table;
@@ -116,52 +133,79 @@ void deallocate_tables(std::vector<Table*>* vector_of_tables)
 
 Table* get_table_for_editing(std::vector<Table*>* vector_of_tables)
 {
-	std::cout << "Ktora tabele chcesz edytowac?\n";
+	if (vector_of_tables->empty())
+	{
+		std::cout << "Nie dodano zadnej tablicy.\n";
+		return nullptr;
+	}
+	else {
+		std::cout << "Ktora tabele chcesz edytowac?\n";
 
-	int chosen_index = loop_until_valid_int(0, vector_of_tables->size() - 1);
+		int chosen_index = loop_until_valid_int(0, vector_of_tables->size() - 1);
 
-	return vector_of_tables->at(chosen_index);
+		return vector_of_tables->at(chosen_index);
+	}
 }
 
 void rename_table(std::vector<Table*>* vector_of_tables)
 {
-	Table* edited_table = get_table_for_editing(vector_of_tables);
+	if (vector_of_tables->empty())
+	{
+		std::cout << "Nie dodano zadnej tablicy.\n";
+	}
+	else {
+		Table* edited_table = get_table_for_editing(vector_of_tables);
 
-	std::cout << "Podaj nowa nazwe tabeli.\n";
-	std::cout << "Obecna nazwa tabeli: " << edited_table->get_table_name() << "\n";
-	std::string new_name = get_user_input();
+		std::cout << "Podaj nowa nazwe tabeli.\n";
+		std::cout << "Obecna nazwa tabeli: " << edited_table->get_table_name() << "\n";
+		std::string new_name = get_user_input();
 
-	edited_table->set_table_name(new_name);
+		edited_table->set_table_name(new_name);
+	}
 }
 
 void resize_table(std::vector<Table*>* vector_of_tables)
 {
-	Table* edited_table = get_table_for_editing(vector_of_tables);
+	if (vector_of_tables->empty())
+	{
+		std::cout << "Nie dodano zadnej tablicy.\n";
+	}
+	else {
+		Table* edited_table = get_table_for_editing(vector_of_tables);
 
-	std::cout << "Podaj nowy rozmiar tabeli.\n";
-	std::cout << "Obecny rozmiar tabeli: " << edited_table->get_table_length() << "\n";
-	std::cout << "Uwaga! Podanie rozmiaru mniejszego niz obecny spowoduje utrate danych!\n";
+		std::cout << "Podaj nowy rozmiar tabeli.\n";
+		std::cout << "Obecny rozmiar tabeli: " << edited_table->get_table_length() << "\n";
+		std::cout << "Uwaga! Podanie rozmiaru mniejszego niz obecny spowoduje utrate danych!\n";
 
-	int new_size = loop_until_valid_int(1, MAX_TABLE_SIZE);
+		int new_size = loop_until_valid_int(1, MAX_TABLE_SIZE);
 
-	bool resize_successful = edited_table->set_table_length(new_size);
+		bool resize_successful = edited_table->set_table_length(new_size);
 
-	communicate_success(resize_successful);
+		communicate_success(resize_successful);
+	}
 }
 
 void put_value(std::vector<Table*>* vector_of_tables)
 {
-	Table* edited_table = get_table_for_editing(vector_of_tables);
+	if (vector_of_tables->empty())
+	{
+		std::cout << "Nie dodano zadnej tablicy.\n";
+	}
+	else {
+		Table* edited_table = get_table_for_editing(vector_of_tables);
 
-	std::cout << "Podaj wartosc, ktora chcesz wpisac do tabeli.\n";
+		std::cout << "Podaj wartosc, ktora chcesz wpisac do tabeli.\n";
 
-	int new_value = loop_until_valid_int(MIN_INTEGER, MAX_INTEGER);
+		int new_value = loop_until_valid_int(MIN_INTEGER, MAX_INTEGER);
 
-	std::cout << "Na ktorej pozycji chcesz wpisac nowa wartosc?\n";
 
-	int chosen_index = loop_until_valid_int(0, edited_table->get_table_length() - 1);
+		std::cout << "Na ktorej pozycji chcesz wpisac nowa wartosc?\n";
 
-	bool write_successful = edited_table->set_value(chosen_index, new_value);
+		int chosen_index = loop_until_valid_int(0, edited_table->get_table_length() - 1);
 
-	communicate_success(write_successful);
+
+		bool write_successful = edited_table->set_value(chosen_index, new_value);
+
+		communicate_success(write_successful);
+	}
 }

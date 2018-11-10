@@ -104,29 +104,27 @@ void Menu::print_options()
 
 AbstractMenuItem* Menu::choose_option()
 {
-	//TODO: allow for choosing return, help and search
-	std::string chosen_command = get_user_input();
+	std::string user_input = get_user_input();
+	AbstractMenuItem* found_item = nullptr;
 
-	if (chosen_command == return_item_command)
+
+	if (user_input == return_item_command)
 	{
-		return return_item;
+		found_item = return_item;
 	}
 	
-	if (chosen_command == search_item_command)
+	if (user_input == search_item_command)
 	{
-		return search_item;
+		found_item = search_item;
 	}
 
-	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(chosen_command);
-
+	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(user_input);
 	if(find_iterator != item_map->end())
 	{
-		return find_iterator->second;
+		found_item = find_iterator->second;
 	}
-	else
-	{
-		return nullptr;
-	}
+	
+	return found_item;
 }
 
 void Menu::search_for_command(std::string command_name, std::vector<std::string>* found_paths)
