@@ -20,7 +20,7 @@ void HelpAction::perform_action() const
 
 	std::string user_input = get_user_input();
 
-	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(get_user_input());
+	std::map<std::string, AbstractMenuItem*>::iterator find_iterator = item_map->find(user_input);
 
 	if(find_iterator != item_map->end())
 	{
@@ -29,7 +29,7 @@ void HelpAction::perform_action() const
 
 		if (possible_command != nullptr) {
 			std::cout << "Help for command " << user_input << ":\n";
-			std::cout << possible_command->get_help();
+			std::cout << possible_command->get_help() << "\n";
 		}
 		else
 		{
