@@ -5,12 +5,15 @@
 #include "ReturnAction.h"
 #include "input_output.h"
 #include "SearchAction.h"
+#include "HelpAction.h"
 
 //TODO: this really shouldn't be here
-static const std::string return_item_description = "Return to previous menu";
 static const std::string return_item_command = "return";
-static const std::string search_item_description = "Search in whole menu.";
 static const std::string search_item_command = "search";
+static const std::string help_item_command = "help";
+static const std::string return_item_description = "Return to previous menu";
+static const std::string search_item_description = "Search in whole menu.";
+static const std::string help_item_description = "Get help for a command in the menu.";
 
 static const std::string available_items = "Available options:";
 static const std::string no_item_found = "No option with given command found.";
@@ -34,16 +37,25 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 
 	//this is also deallocated in Menu destructor
 	this->return_item = new Command(
-		new ReturnAction(), //this is deallocated in MenuCommand destructor
+		new ReturnAction(), //this is deallocated in Command destructor
 		return_item_description,
 		return_item_command,
 		this->get_path()
 	);
 
+	//deallocated in Menu destructor
 	this->search_item = new Command(
-		new SearchAction(this->root_menu),
+		new SearchAction(this->root_menu), //deallocated in Command destructor
 		search_item_description,
 		search_item_command,
+		this->get_path()
+	);
+
+	//deallocated in Menu destructor
+	this->help_item = new Command(
+		new HelpAction(this->item_map), //deallocated in Command destructor
+		help_item_description,
+		help_item_command,
 		this->get_path()
 	);
 }
@@ -71,6 +83,22 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 		return_item_command,
 		this->get_path()
 	);
+
+	//deallocated in Menu destructor
+	this->search_item = new Command(
+		new SearchAction(this->root_menu), //deallocated in Command destructor
+		search_item_description,
+		search_item_command,
+		this->get_path()
+	);
+
+	//deallocated in Menu destructor
+	this->help_item = new Command(
+		new HelpAction(this->item_map), //deallocated in Command destructor
+		help_item_description,
+		help_item_command,
+		this->get_path()
+	);
 }
 
 Menu::~Menu()
@@ -86,6 +114,7 @@ Menu::~Menu()
 
 	delete return_item; //deallocate
 	delete search_item;
+	delete help_item;
 	delete item_map;
 }
 

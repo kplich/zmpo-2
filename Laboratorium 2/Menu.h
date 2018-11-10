@@ -79,7 +79,6 @@ private:
 
 	/**
 	 * Command object that makes the user leave the current menu.
-	 * It's kept as a part of a menu for later comparison.
 	 */
 	Command* return_item;
 
@@ -87,4 +86,9 @@ private:
 	 * Command object that allows for searching the menu.
 	 */
 	Command* search_item;
+
+	/**
+	 * Command object that allows for getting help about a command within current menu.
+	 */
+	Command* help_item;
 };

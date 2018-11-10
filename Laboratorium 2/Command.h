@@ -8,7 +8,7 @@ public:
 	/**
 	 * Parametrized constructor.
 	 */
-	Command(AbstractAction* action, std::string description, std::string command, std::string parent_path);;
+	Command(AbstractAction* action, std::string description, std::string command, std::string parent_path);
 
 	/**
 	 * Destructor.
@@ -20,10 +20,14 @@ public:
 	 */
 	void run() override;
 
+	std::string get_help();
+
 private:
 	/**
 	 * Pointer to an action object.
 	 */
 	AbstractAction* action;
+
+	std::string help;
 };
 

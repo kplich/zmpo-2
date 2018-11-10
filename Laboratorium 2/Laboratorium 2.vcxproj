@@ -154,6 +154,7 @@
     <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\Table.h" />
     <ClInclude Include="action_implementations.h" />
     <ClInclude Include="DefaultAction.h" />
+    <ClInclude Include="HelpAction.h" />
     <ClInclude Include="input_output.h" />
     <ClInclude Include="SearchAction.h" />
     <ClInclude Include="vector_based_action_classes.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\Table.cpp" />
     <ClCompile Include="action_implementations.cpp" />
     <ClCompile Include="DefaultAction.cpp" />
+    <ClCompile Include="HelpAction.cpp" />
     <ClCompile Include="input_output.cpp" />
     <ClCompile Include="SearchAction.cpp" />
     <ClCompile Include="vector_based_action_classes.cpp" />
