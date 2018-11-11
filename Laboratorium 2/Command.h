@@ -2,6 +2,9 @@
 #include "AbstractMenuItem.h"
 #include "AbstractAction.h"
 
+class Menu;
+class ParsingStack;
+
 class Command : public AbstractMenuItem
 {
 public:
@@ -27,6 +30,8 @@ public:
 	std::string get_help();
 
 	std::string to_string() override;
+
+	static Command* parse_command(ParsingStack* input, std::string parent_path);
 
 private:
 	/**

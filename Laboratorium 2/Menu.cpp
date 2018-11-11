@@ -276,7 +276,7 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 					{
 						Menu* result_item = new Menu(description, command, root_menu, parent_path);
 
-						//TODO: HMMMMMMMMMMM...
+						//TODO: HMMMMMMMMMMM... this doesn't really make sense
 						while (!input->empty())
 						{
 							AbstractMenuItem* child_item = parse_child(input, root_menu, result_item->get_path());
