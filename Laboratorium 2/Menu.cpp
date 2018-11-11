@@ -7,12 +7,12 @@
 #include "SearchAction.h"
 #include "HelpAction.h"
 
-static const std::string begin_and_end_string = "'";
-static const std::string begin_menu = "(";
-static const std::string end_menu = ")";
-static const std::string description_command_separator = ",";
-static const std::string command_children_separator = ";";
-static const std::string children_separator = ",";
+static const char begin_and_end_string = '\'';
+static const char begin_menu = '(';
+static const char end_menu = ')';
+static const char description_command_separator = ',';
+static const char command_children_separator = ';';
+static const char children_separator = ',';
 static const std::string end_children = "eoc";
 
 //TODO: this really shouldn't be here
@@ -250,9 +250,58 @@ void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_m
 	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
 }
 
+Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_path)
+{
+	std::string description;
+	std::string command;
+	
+	if (input->pop_equal_to(begin_menu)) //parse beginning of menu
+	{
+		if (input->pop_equal_to(begin_and_end_string)) //parse beginning of a string
+		{
+			//parse description
+			description = input->pop_until_char_found(begin_and_end_string);
+
+			//parse description-command delimiter
+			if(input->pop_equal_to(description_command_separator))
+			{
+				//parse beginning of a string
+				if(input->pop_equal_to(begin_and_end_string))
+				{
+					//parse command
+					command = input->pop_until_char_found(begin_and_end_string);
+
+					//parse command-children delimiter
+					if(input->pop_equal_to(command_children_separator))
+					{
+						Menu* result_item = new Menu(description, command, root_menu, parent_path);
+
+						//TODO: HMMMMMMMMMMM...
+						while (!input->empty())
+						{
+							AbstractMenuItem* child_item = parse_child(input, root_menu, result_item->get_path());
+							result_item->add_item(child_item);
+						}
+
+						std::string eoc = input->pop_until_char_found(end_menu);
+						if(eoc == end_children)
+						{
+							return  result_item;
+						}
+						//TODO: reached end of string but no end of menu :o
+					}
+				}
+			}
+		}
+	}
+
+	return nullptr;
+}
+
 std::string Menu::to_string()
 {
-	std::string result = 
+	std::string result =
+		"" +
 		begin_menu +
 		begin_and_end_string +
 		(this->description + 

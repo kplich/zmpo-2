@@ -1,12 +1,15 @@
 ﻿#include "pch.h"
 #include "ParsingStack.h"
 #include <string>
+#include <iostream>
+
+//TODO: prevent reaching end of list
 
 ParsingStack::ParsingStack(std::string string)
 {
 	//deallocated in destructor
 	this->source = new std::list<char>(string.begin(), string.end());
-	this->position_counter = 0;
+	this->position_counter = -1;
 }
 
 ParsingStack::~ParsingStack()
@@ -16,13 +19,31 @@ ParsingStack::~ParsingStack()
 
 char ParsingStack::pop_one()
 {
-	char first = source->front();
-	source->pop_front();
+	if (!source->empty())
+	{
+		char first = source->front();
+		source->pop_front();
 
-	++position_counter;
+		++position_counter;
 
-	return first;
+		return first;
+	}
+	else return 0; //TODO: error here
 }
+
+bool ParsingStack::pop_equal_to(char expected)
+{
+	char found = pop_one();
+	bool result = found == expected;
+
+	if(!result)
+	{
+		parsing_error(found, expected);
+	}
+
+	return result;
+}
+
 
 std::string ParsingStack::pop_until_char_found(char ending_character)
 {
@@ -30,7 +51,7 @@ std::string ParsingStack::pop_until_char_found(char ending_character)
 
 	char current_top = pop_one();
 
-	while(current_top != ending_character)
+	while(!source->empty() && current_top != ending_character)
 	{
 		result += current_top;
 		current_top = pop_one();
@@ -43,6 +64,18 @@ int ParsingStack::get_position()
 {
 	return position_counter;
 }
+
+bool ParsingStack::empty()
+{
+	return source->empty();
+}
+
+void ParsingStack::parsing_error(char expected, char found)
+{
+	std::cout << "Error at position " << position_counter << ".\n";
+	std::cout << "Expected: " << expected << ", found: " << found << ".\n";
+}
+
 
 
 

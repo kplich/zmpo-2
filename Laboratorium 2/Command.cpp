@@ -2,10 +2,10 @@
 #include "Command.h"
 #include "DefaultAction.h"
 
-static const std::string begin_and_end_string = "'";
-static const std::string begin_command = "[";
-static const std::string separator = ",";
-static const std::string end_command = "]";
+static const char begin_and_end_string = '\'';
+static const char begin_command = '[';
+static const char separator = ',';
+static const char end_command = ']';
 
 Command::~Command()
 {
@@ -39,7 +39,8 @@ std::string Command::get_help()
 
 std::string Command::to_string()
 {
-	return begin_command +
+	return "" +
+		begin_command +
 		begin_and_end_string +
 		this->description +
 		begin_and_end_string +

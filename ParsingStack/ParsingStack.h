@@ -17,6 +17,11 @@ public:
 	char pop_one();
 
 	/**
+	 * Pop a character from the string and check if it's equal to an expected character
+	 */
+	bool pop_equal_to(char expected);
+
+	/**
 	 * Returns a string based on chars popped until given character has been found.
 	 * After returning the string, the stack doesn't contain the ending character.
 	 * @param ending_character character that's supposed to terminate popping the characters
@@ -31,6 +36,11 @@ public:
 	 */
 	int get_position();
 
+	/**
+	 * @return true, if there are no elements in the stack, false otherwise
+	 */
+	bool empty();
+
 private:
 	/**
 	 * Source of chars.
@@ -38,7 +48,9 @@ private:
 	std::list<char>* source;
 
 	/**
-	 * Number indicating position in the string.
+	 * Number indicating position in the string - number of the last popped character.
 	 */
 	int position_counter;
+
+	void parsing_error(char expected, char found);
 };
