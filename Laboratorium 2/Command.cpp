@@ -40,20 +40,23 @@ std::string Command::get_help()
 
 std::string Command::to_string()
 {
-	return "" +
-		begin_command +
-			begin_and_end_string +
-			this->description +
-			begin_and_end_string +
-		separator +
-			begin_and_end_string +
-			this->command +
-			begin_and_end_string +
-		separator +
-			begin_and_end_string +
-			this->help +
-			begin_and_end_string +
-		end_command;
+	std::string result;
+
+	result += begin_command;
+	result += begin_and_end_string;
+	result += this->description;
+	result += begin_and_end_string;
+	result += separator;
+	result += begin_and_end_string;
+	result += this->command;
+	result += begin_and_end_string;
+	result += separator;
+	result += begin_and_end_string;
+	result += this->help;
+	result += begin_and_end_string;
+	result += end_command;
+
+	return result;
 }
 
 Command* Command::parse_command(ParsingStack* input, std::string parent_path)

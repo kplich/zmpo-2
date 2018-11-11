@@ -10,6 +10,8 @@ public:
 	ParsingStack(std::string string);
 	~ParsingStack();
 
+	char peek();
+
 	/**
 	 * Returns a character at the top of the stack
 	 * @return a character at the top of the stack

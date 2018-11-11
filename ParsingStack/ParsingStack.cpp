@@ -17,6 +17,18 @@ ParsingStack::~ParsingStack()
 	delete source;
 }
 
+char ParsingStack::peek()
+{
+	if(!source->empty())
+	{
+		return source->front();
+	}
+	else
+	{
+		return 0; //TODO: error here!
+	}
+}
+
 char ParsingStack::pop_one()
 {
 	if (!source->empty())
@@ -34,11 +46,11 @@ char ParsingStack::pop_one()
 bool ParsingStack::pop_equal_to(char expected)
 {
 	char found = pop_one();
-	bool result = found == expected;
+	bool result = (found == expected);
 
 	if(!result)
 	{
-		parsing_error(found, expected);
+		parsing_error(expected, found);
 	}
 
 	return result;

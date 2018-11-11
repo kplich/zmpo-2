@@ -8,13 +8,13 @@
 #include "HelpAction.h"
 #include <fstream>
 
-static const char begin_and_end_string = '\'';
 static const char begin_menu = '(';
-static const char end_menu = ')';
+static const char begin_and_end_string = '\'';
 static const char description_command_separator = ',';
 static const char command_children_separator = ';';
 static const char children_separator = ',';
 static const std::string end_children = "eoc";
+static const char end_menu = ')';
 
 //TODO: this should come from Command; how to make that available?
 static const char begin_command = '[';
@@ -268,7 +268,7 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 		//parse command-children delimiter
 		if (input->pop_equal_to(command_children_separator))
 		{
-			char top = input->pop_one();
+			char top = input->peek();
 
 			while (top == begin_menu || top == begin_command)
 			{
@@ -287,12 +287,40 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 						result_item->add_item(child_item);
 					}
 				}
+				else
+				{
+					std::cout << "Error at position " << input->get_position() << ".\n";
+					std::cout << "Expected: " << begin_menu << " or " << begin_command << ", found: " << top << ".\n";
+					return nullptr; //TODO: error here
+				}
+
+				if(input->pop_equal_to(children_separator))
+				{
+					top = input->peek();
+				}
+				else
+				{
+					std::cout << "Error at position " << input->get_position() << ".\n";
+					std::cout << "Expected: " << children_separator << ", found: " << top << ".\n";
+					return nullptr; //TODO: error here
+				}
 			}
 
 			std::string eoc = input->pop_until_char_found(end_menu);
 			if (eoc == end_children)
 			{
-				return  result_item;
+				if(input->pop_equal_to(end_menu))
+				{
+					return result_item;
+				}
+				else
+				{
+					
+				}
+			}
+			else
+			{
+				//TODO: expected end of string, found more than that
 			}
 			//TODO: reached end of string but no end of menu :o
 		}
@@ -331,17 +359,16 @@ Menu* Menu::parse_beginning(ParsingStack* input, std::string* description, std::
 
 std::string Menu::to_string()
 {
-	std::string result =
-		"" +
-		begin_menu +
-			begin_and_end_string +
-			this->description + 
-			begin_and_end_string +
-		description_command_separator +
-			begin_and_end_string +
-			this->command +
-			begin_and_end_string +
-		command_children_separator;
+	std::string result;
+	result += begin_menu; 
+	result += begin_and_end_string;
+	result += this->description;
+	result += begin_and_end_string;
+	result += description_command_separator;
+	result += begin_and_end_string;
+	result += this->command;
+	result += begin_and_end_string;
+	result += command_children_separator;
 
 	std::map<std::string, AbstractMenuItem*>::iterator iterator = item_map->begin();
 	for(; iterator != item_map->end(); ++iterator)
@@ -375,7 +402,7 @@ Menu* Menu::open_menu(std::string filename)
 
 	if(source.is_open())
 	{
-		source >> string_source;
+		std::getline(source, string_source);
 	}
 	source.close();
 
