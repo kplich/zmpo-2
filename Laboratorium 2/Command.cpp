@@ -42,17 +42,17 @@ std::string Command::to_string()
 {
 	return "" +
 		begin_command +
-		begin_and_end_string +
-		this->description +
-		begin_and_end_string +
+			begin_and_end_string +
+			this->description +
+			begin_and_end_string +
 		separator +
-		begin_and_end_string +
-		this->command +
-		begin_and_end_string +
+			begin_and_end_string +
+			this->command +
+			begin_and_end_string +
 		separator +
-		begin_and_end_string +
-		this->help +
-		begin_and_end_string +
+			begin_and_end_string +
+			this->help +
+			begin_and_end_string +
 		end_command;
 }
 

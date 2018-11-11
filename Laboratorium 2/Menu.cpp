@@ -15,6 +15,9 @@ static const char command_children_separator = ';';
 static const char children_separator = ',';
 static const std::string end_children = "eoc";
 
+//TODO: this should come from Command; how to make that available?
+static const char begin_command = '[';
+
 //TODO: this really shouldn't be here
 static const std::string return_item_command = "return";
 static const std::string search_item_command = "search";
@@ -254,7 +257,9 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 {
 	std::string description;
 	std::string command;
-	
+
+	//TODO: separate parsing strings and parsing children
+
 	if (input->pop_equal_to(begin_menu)) //parse beginning of menu
 	{
 		if (input->pop_equal_to(begin_and_end_string)) //parse beginning of a string
@@ -276,11 +281,25 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 					{
 						Menu* result_item = new Menu(description, command, root_menu, parent_path);
 
-						//TODO: HMMMMMMMMMMM... this doesn't really make sense
-						while (!input->empty())
+						char top = input->pop_one();
+
+						while(top == begin_menu || top == begin_command)
 						{
-							AbstractMenuItem* child_item = parse_child(input, root_menu, result_item->get_path());
-							result_item->add_item(child_item);
+							AbstractMenuItem* child_item;
+							if(top == begin_menu)
+							{
+								child_item = parse_menu(input, result_item, result_item->get_path());
+								if (child_item != nullptr) {
+									result_item->add_item(child_item);
+								}
+							}
+							else if (top == begin_command)
+							{
+								child_item = Command::parse_command(input, result_item->get_path());
+								if (child_item != nullptr) {
+									result_item->add_item(child_item);
+								}
+							}
 						}
 
 						std::string eoc = input->pop_until_char_found(end_menu);
@@ -303,14 +322,14 @@ std::string Menu::to_string()
 	std::string result =
 		"" +
 		begin_menu +
-		begin_and_end_string +
-		(this->description + 
-		begin_and_end_string +
+			begin_and_end_string +
+			this->description + 
+			begin_and_end_string +
 		description_command_separator +
-		begin_and_end_string +
-		this->command +
-		begin_and_end_string +
-		command_children_separator);
+			begin_and_end_string +
+			this->command +
+			begin_and_end_string +
+		command_children_separator;
 
 	std::map<std::string, AbstractMenuItem*>::iterator iterator = item_map->begin();
 	for(; iterator != item_map->end(); ++iterator)
