@@ -6,6 +6,7 @@
 #include "input_output.h"
 #include "SearchAction.h"
 #include "HelpAction.h"
+#include <fstream>
 
 static const char begin_and_end_string = '\'';
 static const char begin_menu = '(';
@@ -260,55 +261,65 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 
 	//TODO: separate parsing strings and parsing children
 
+	Menu* result_item = parse_beginning(input, &description, &command, root_menu, parent_path);
+
+	if (result_item != nullptr) {
+
+		//parse command-children delimiter
+		if (input->pop_equal_to(command_children_separator))
+		{
+			char top = input->pop_one();
+
+			while (top == begin_menu || top == begin_command)
+			{
+				AbstractMenuItem* child_item;
+				if (top == begin_menu)
+				{
+					child_item = parse_menu(input, result_item, result_item->get_path());
+					if (child_item != nullptr) {
+						result_item->add_item(child_item);
+					}
+				}
+				else if (top == begin_command)
+				{
+					child_item = Command::parse_command(input, result_item->get_path());
+					if (child_item != nullptr) {
+						result_item->add_item(child_item);
+					}
+				}
+			}
+
+			std::string eoc = input->pop_until_char_found(end_menu);
+			if (eoc == end_children)
+			{
+				return  result_item;
+			}
+			//TODO: reached end of string but no end of menu :o
+		}
+	}
+
+	return nullptr;
+}
+
+Menu* Menu::parse_beginning(ParsingStack* input, std::string* description, std::string* command, Menu* root, std::string parent_path)
+{
 	if (input->pop_equal_to(begin_menu)) //parse beginning of menu
 	{
 		if (input->pop_equal_to(begin_and_end_string)) //parse beginning of a string
 		{
 			//parse description
-			description = input->pop_until_char_found(begin_and_end_string);
+			*description = input->pop_until_char_found(begin_and_end_string);
 
 			//parse description-command delimiter
-			if(input->pop_equal_to(description_command_separator))
+			if (input->pop_equal_to(description_command_separator))
 			{
 				//parse beginning of a string
-				if(input->pop_equal_to(begin_and_end_string))
+				if (input->pop_equal_to(begin_and_end_string))
 				{
 					//parse command
-					command = input->pop_until_char_found(begin_and_end_string);
+					*command = input->pop_until_char_found(begin_and_end_string);
 
-					//parse command-children delimiter
-					if(input->pop_equal_to(command_children_separator))
-					{
-						Menu* result_item = new Menu(description, command, root_menu, parent_path);
-
-						char top = input->pop_one();
-
-						while(top == begin_menu || top == begin_command)
-						{
-							AbstractMenuItem* child_item;
-							if(top == begin_menu)
-							{
-								child_item = parse_menu(input, result_item, result_item->get_path());
-								if (child_item != nullptr) {
-									result_item->add_item(child_item);
-								}
-							}
-							else if (top == begin_command)
-							{
-								child_item = Command::parse_command(input, result_item->get_path());
-								if (child_item != nullptr) {
-									result_item->add_item(child_item);
-								}
-							}
-						}
-
-						std::string eoc = input->pop_until_char_found(end_menu);
-						if(eoc == end_children)
-						{
-							return  result_item;
-						}
-						//TODO: reached end of string but no end of menu :o
-					}
+					return new Menu(*description, *command, root, parent_path);
 				}
 			}
 		}
@@ -316,6 +327,7 @@ Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_
 
 	return nullptr;
 }
+
 
 std::string Menu::to_string()
 {
@@ -341,4 +353,35 @@ std::string Menu::to_string()
 	result += end_menu;
 
 	return result;
+}
+
+void Menu::save_menu(std::string filename)
+{
+	std::ofstream destination(filename);
+
+	if(destination.is_open())
+	{
+		destination << this->to_string();
+	}
+
+	destination.close();
+}
+
+
+Menu* Menu::open_menu(std::string filename)
+{
+	std::ifstream source(filename);
+	std::string string_source;
+
+	if(source.is_open())
+	{
+		source >> string_source;
+	}
+	source.close();
+
+	return parse_menu(
+		new ParsingStack(string_source),
+		nullptr,
+		""
+	);
 }
