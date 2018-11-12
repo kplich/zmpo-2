@@ -9,6 +9,7 @@
 #include <fstream>
 #include "Parser.h"
 
+//TODO: is this a good way for keeping constants?
 static const char begin_menu = '(';
 static const char begin_and_end_string = '\'';
 static const char description_command_separator = ',';
@@ -34,7 +35,6 @@ static const std::string no_item_found = "No option with given command found.";
 Menu::Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
 {
-	//TODO: wrr, ugly!
 	if (root_menu == nullptr)
 	{
 		this->root_menu = this;
@@ -79,7 +79,6 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
 {
-	//TODO: wrr, ugly!
 	if (root_menu == nullptr)
 	{
 		this->root_menu = this;
@@ -121,6 +120,11 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 
 Menu::~Menu()
 {
+	//deallocate special items
+	delete return_item;
+	delete search_item;
+	delete help_item;
+
 	//deallocate all items in the map and the map itself
 	std::map<std::string, AbstractMenuItem*>::iterator deleting_iterator = item_map->begin();
 
@@ -131,11 +135,6 @@ Menu::~Menu()
 	}
 	item_map->clear();
 	delete item_map;
-
-	//deallocate special items
-	delete return_item;
-	delete search_item;
-	delete help_item;
 }
 
 void Menu::print_options()
@@ -156,12 +155,10 @@ AbstractMenuItem* Menu::choose_option()
 	std::string user_input = get_user_input();
 	AbstractMenuItem* found_item = nullptr;
 
-
 	if (user_input == return_item_command)
 	{
 		found_item = return_item;
 	}
-	
 	if (user_input == search_item_command)
 	{
 		found_item = search_item;

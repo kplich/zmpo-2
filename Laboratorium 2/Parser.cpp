@@ -3,6 +3,7 @@
 #include "DefaultAction.h"
 #include <iostream>
 
+//TODO: repeated in both command and menu classes
 static const char begin_and_end_string = '\'';
 
 static const char begin_menu = '(';
@@ -53,20 +54,14 @@ AbstractMenuItem* Parser::parse_item(Menu* root, std::string parent_path)
 		}
 		default:
 		{
-			parsing_error("Expected: " + begin_menu + " or " + begin_command + ", found: '" + found + "'.");
+			parsing_error("Expected: " + std::to_string(begin_menu) + " or " + std::to_string(begin_command) + ", found: " + found + ".");
 			return nullptr;
 		}
 	}
 }
 
-
 Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 {
-	std::string description;
-	std::string command;
-
-	//TODO: separate parsing strings and parsing children
-
 	Menu* result_item = parse_beginning_of_menu(root, parent_path);
 
 	if (result_item == nullptr)

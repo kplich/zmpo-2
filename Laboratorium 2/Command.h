@@ -31,8 +31,6 @@ public:
 
 	std::string to_string() override;
 
-	static Command* parse_command(ParsingStack* input, std::string parent_path);
-
 private:
 	/**
 	 * Pointer to an action object.
