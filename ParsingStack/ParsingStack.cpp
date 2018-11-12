@@ -43,6 +43,7 @@ char ParsingStack::pop_one()
 	else return 0; //TODO: error here
 }
 
+
 bool ParsingStack::pop_equal_to(char expected)
 {
 	char found = pop_one();
@@ -56,7 +57,7 @@ bool ParsingStack::pop_equal_to(char expected)
 	return result;
 }
 
-
+//TODO: deal with possibility of emptying the stack
 std::string ParsingStack::pop_until_char_found(char ending_character)
 {
 	std::string result;
