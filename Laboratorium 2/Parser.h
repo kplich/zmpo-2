@@ -13,7 +13,7 @@ public:
 private:
 	ParsingStack* source;
 
-	AbstractMenuItem* parse_item(std::string parent_path);
+	AbstractMenuItem* parse_item(Menu* root, std::string parent_path);
 
 	Menu* parse_menu(Menu* root, std::string parent_path);
 	Command* parse_command(std::string parent_path);
