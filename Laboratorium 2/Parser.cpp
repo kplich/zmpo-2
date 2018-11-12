@@ -20,32 +20,41 @@ Parser::Parser(std::string input)
 	this->source = new ParsingStack(input);
 }
 
-
 Parser::~Parser()
 {
 	delete source;
 }
 
+Menu* Parser::parse()
+{
+	return parse_menu(nullptr, "");
+}
+
+
 AbstractMenuItem* Parser::parse_item(Menu* root, std::string parent_path)
 {
-	char found = source->peek();
+	char found;
+
+	if (!source->peek(found))
+	{
+		end_of_string_error();
+		return nullptr;
+	}
 
 	switch (found)
 	{
 		case begin_menu:
 		{
 			return parse_menu(root, parent_path);
-			break;
 		}
 		case begin_command:
 		{
 			return parse_command(parent_path);
-			break;
 		}
 		default:
 		{
+			parsing_error("Expected: " + begin_menu + " or " + begin_command + ", found: '" + found + "'.");
 			return nullptr;
-			break;
 		}
 	}
 }
@@ -60,49 +69,63 @@ Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 
 	Menu* result_item = parse_beginning_of_menu(root, parent_path);
 
-	if (result_item != nullptr)
+	if (result_item == nullptr)
 	{
-		//parse command-children delimiter
-		if (parse_char(command_children_separator))
+		return nullptr;
+	}
+
+	//parse command-children delimiter, any error will be signalled from the method
+	if (!parse_char(command_children_separator))
+	{
+		return nullptr;
+	}
+
+	//we need to know what's at the top of the stack,
+	//but so do the methods later
+	char top;
+	if (!source->peek(top)) {
+		end_of_string_error();
+		return nullptr;
+	}
+
+	//all children parsed here
+	while (top != end_menu)
+	{
+		//parse a child item. any errors will be signalled in this call
+		AbstractMenuItem* child_item = parse_item(result_item, result_item->get_path());
+
+		if (child_item == nullptr)
 		{
-			//we need to know what's at the top of the stack,
-			//but so do the methods later
-			char top = source->peek();
+			//if there was an error during parsing a child,
+			//the whole string should get invalidated
+			return nullptr;
+		}
 
-			while (top != end_menu)
-			{
-				//parse a child item
-				AbstractMenuItem* child_item = parse_item(root, parent_path);
-				if(child_item != nullptr)
-				{
-					result_item->add_item(child_item);
+		result_item->add_item(child_item);
 
-					//parse children separator
-					if(!parse_char(children_separator))
-					{
-						return nullptr;
-					}
-				}
-				else
-				{
-					//if there was an error during parsing a child, the whole string should get invalidated.
-					return nullptr;
-				}
-			}
+		//parse children separator, any error will be signalled here
+		if (!parse_char(children_separator))
+		{
+			return nullptr;
+		}
 
-			//parse the finishing char
-			parse_char(end_menu);
-
-			if(!source->empty())
-			{
-				parsing_error("Unexpected characters found after menu definition.\nMenu parsing did not fail, but the results may be different than expected.");
-			}
-
-			return result_item;
+		if (!source->peek(top))
+		{
+			end_of_string_error();
+			return nullptr;
 		}
 	}
 
-	return nullptr;
+	//parse the finishing char
+	parse_char(end_menu);
+
+	//this message is only relevant when we're parsing main menu
+	if (root == nullptr && !source->empty())
+	{
+		parsing_error("Unexpected characters found after menu definition.\nMenu parsing did not fail, but the results may be different than expected.");
+	}
+
+	return result_item;
 }
 
 Menu* Parser::parse_beginning_of_menu(Menu* root, std::string parent_path)
@@ -110,24 +133,34 @@ Menu* Parser::parse_beginning_of_menu(Menu* root, std::string parent_path)
 	std::string description;
 	std::string command;
 
-	if (parse_char(begin_menu)) //parse beginning of menu
+	//parse beginning of menu
+	if (!parse_char(begin_menu))
 	{
-		if (extract_string(description)) //parse description
-		{
-			//parse description-command delimiter
-			if (parse_char(description_command_separator))
-			{
-				//extract command
-				if (extract_string(command))
-				{
-					return new Menu(description, command, root, parent_path);
-				}
-			}
-		}
+		return nullptr;
 	}
 
-	return nullptr;
+	//parse description
+	if (!extract_string(description)) 
+	{
+		return nullptr;
+	}
+
+	//parse description-command delimiter
+	if (!parse_char(description_command_separator))
+	{
+		return nullptr;
+	}
+
+	//extract command
+	if (!extract_string(command))
+	{
+		return nullptr;
+	}
+
+	return new Menu(description, command, root, parent_path);
 }
+
+
 
 
 Command* Parser::parse_command(std::string parent_path)
@@ -136,68 +169,85 @@ Command* Parser::parse_command(std::string parent_path)
 	std::string command;
 	std::string help;
 
-	//TODO: create a fluent API xDD
-	if (parse_char(begin_command)) //parse beginning of command '['
+	if (!parse_char(begin_command)) //parse beginning of command '['
 	{
-		if(extract_string(description)) //parse description
-		{
-			if (parse_char(separator)) //parse separator ','
-			{
-				if (extract_string(command)) //parse command
-				{
-					if (parse_char(separator)) //parse separator ','
-					{
-						if (extract_string(help)) //parse help
-						{
-							if (parse_char(end_command)) //parse end of command ']'
-							{
-								return new Command(
-									description,
-									command,
-									parent_path,
-									new DefaultAction(),
-									help
-								);
-							}
-						}
-					}
-				}
-			}
-		}
+		return nullptr;
 	}
 
-	//if any of the previous condition fails, method returns a null pointer
-	return nullptr;
+	if(!extract_string(description)) //parse description
+	{
+		return nullptr;
+	}
+
+	if (!parse_char(separator)) //parse separator ','
+	{
+		return nullptr;
+	}
+
+	if (!extract_string(command)) //parse command
+	{
+		return nullptr;
+	}
+
+	if (!parse_char(separator)) //parse separator ','
+	{
+		return nullptr;
+	}
+
+	if (!extract_string(help)) //parse help
+	{
+		return nullptr;
+	}
+
+	if (!parse_char(end_command)) //parse end of command ']'
+	{
+		return nullptr;
+	}
+
+	return new Command(description, command, parent_path, new DefaultAction(), help);
 }
 
 bool Parser::extract_string(std::string& result)
 {
-	char found = source->pop_one();
-	if(found == begin_and_end_string)
+	char found;
+
+	if(!source->pop_one(found))
 	{
-		result = source->pop_until_char_found(begin_and_end_string);
-		return true;
+		return false;
 	}
-	else
+
+	if(found != begin_and_end_string)
 	{
 		parsing_error(begin_and_end_string, found);
 		return false;
 	}
+
+	result = "";
+
+	if (!source->pop_until_char_found(result, begin_and_end_string))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 bool Parser::parse_char(char expected)
 {
-	char found = source->pop_one();
+	char found;
 
-	if(found == expected)
+	if (!source->pop_one(found))
 	{
-		return true;
+		return false;
 	}
-	else
+
+	if(found != expected)
 	{
 		parsing_error(expected, found);
 		return false;
 	}
+
+	return true;
 }
 
 void Parser::parsing_error(char expected, char found)
@@ -211,6 +261,14 @@ void Parser::parsing_error(std::string message)
 	std::cout << "Error at position " << source->get_position() << ".\n";
 	std::cout << message << "\n";
 }
+
+void Parser::end_of_string_error()
+{
+	std::cout << "Error at position " << source->get_position() << ".\n";
+	std::cout << "Reached end of string too early.\n";
+	
+}
+
 
 
 

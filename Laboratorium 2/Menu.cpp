@@ -7,17 +7,14 @@
 #include "SearchAction.h"
 #include "HelpAction.h"
 #include <fstream>
+#include "Parser.h"
 
 static const char begin_menu = '(';
 static const char begin_and_end_string = '\'';
 static const char description_command_separator = ',';
 static const char command_children_separator = ';';
 static const char children_separator = ',';
-static const std::string end_children = "eoc";
 static const char end_menu = ')';
-
-//TODO: this should come from Command; how to make that available?
-static const char begin_command = '[';
 
 //TODO: this really shouldn't be here
 static const std::string return_item_command = "return";
@@ -254,109 +251,6 @@ void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_m
 	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
 }
 
-Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_path)
-{
-	std::string description;
-	std::string command;
-
-	//TODO: separate parsing strings and parsing children
-
-	Menu* result_item = parse_beginning(input, &description, &command, root_menu, parent_path);
-
-	if (result_item != nullptr) {
-
-		//parse command-children delimiter
-		if (input->pop_equal_to(command_children_separator))
-		{
-			char top = input->peek();
-
-			while (top == begin_menu || top == begin_command)
-			{
-				AbstractMenuItem* child_item;
-				if (top == begin_menu)
-				{
-					child_item = parse_menu(input, result_item, result_item->get_path());
-					if (child_item != nullptr) {
-						result_item->add_item(child_item);
-					}
-				}
-				else if (top == begin_command)
-				{
-					child_item = Command::parse_command(input, result_item->get_path());
-					if (child_item != nullptr) {
-						result_item->add_item(child_item);
-					}
-				}
-				else
-				{
-					std::cout << "Error at position " << input->get_position() << ".\n";
-					std::cout << "Expected: " << begin_menu << " or " << begin_command << ", found: " << top << ".\n";
-					return nullptr; //TODO: error here
-				}
-
-				if(input->pop_equal_to(children_separator))
-				{
-					top = input->peek();
-				}
-				else
-				{
-					std::cout << "Error at position " << input->get_position() << ".\n";
-					std::cout << "Expected: " << children_separator << ", found: " << top << ".\n";
-					return nullptr; //TODO: error here
-				}
-			}
-
-			std::string eoc = input->pop_until_char_found(end_menu);
-			if (eoc == end_children)
-			{
-				if(input->pop_equal_to(end_menu))
-				{
-					return result_item;
-				}
-				else
-				{
-					
-				}
-			}
-			else
-			{
-				//TODO: expected end of string, found more than that
-			}
-			//TODO: reached end of string but no end of menu :o
-		}
-	}
-
-	return nullptr;
-}
-
-Menu* Menu::parse_beginning(ParsingStack* input, std::string* description, std::string* command, Menu* root, std::string parent_path)
-{
-	if (input->pop_equal_to(begin_menu)) //parse beginning of menu
-	{
-		if (input->pop_equal_to(begin_and_end_string)) //parse beginning of a string
-		{
-			//parse description
-			*description = input->pop_until_char_found(begin_and_end_string);
-
-			//parse description-command delimiter
-			if (input->pop_equal_to(description_command_separator))
-			{
-				//parse beginning of a string
-				if (input->pop_equal_to(begin_and_end_string))
-				{
-					//parse command
-					*command = input->pop_until_char_found(begin_and_end_string);
-
-					return new Menu(*description, *command, root, parent_path);
-				}
-			}
-		}
-	}
-
-	return nullptr;
-}
-
-
 std::string Menu::to_string()
 {
 	std::string result;
@@ -376,7 +270,6 @@ std::string Menu::to_string()
 		result += iterator->second->to_string();
 		result += children_separator;
 	}
-	result += end_children;
 	result += end_menu;
 
 	return result;
@@ -406,9 +299,5 @@ Menu* Menu::open_menu(std::string filename)
 	}
 	source.close();
 
-	return parse_menu(
-		new ParsingStack(string_source),
-		nullptr,
-		""
-	);
+	return (new Parser(string_source))->parse();
 }
