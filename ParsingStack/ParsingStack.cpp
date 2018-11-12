@@ -3,8 +3,6 @@
 #include <string>
 #include <iostream>
 
-//TODO: prevent reaching end of list
-
 ParsingStack::ParsingStack(std::string string)
 {
 	//deallocated in destructor

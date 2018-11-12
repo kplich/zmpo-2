@@ -3,7 +3,6 @@
 #include "Menu.h"
 
 //TODO: is it actually acceptable to separately interpret 'search' and command to look for?
-
 /**
  * Action for searching the menu for items with a given command
  */

@@ -63,7 +63,6 @@ private:
 	 */
 	Menu* parse_beginning_of_menu(Menu* root, std::string parent_path);
 
-	//TODO: deal with possibility of unclosed string ('........)
 	/**
 	 * Helper method for extracting a string delimited by certain characters (apostrophes (') by default)
 	 * @param result reference to a string containing the resulting string (without the delimiters)

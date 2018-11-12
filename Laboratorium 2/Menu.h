@@ -56,7 +56,6 @@ public:
 	/**
 	 * Saves the menu to a text file.
 	 */
-	 //TODO: not entirely sure about this signature.
 	void save_menu(std::string filename);
 
 	static Menu* open_menu(std::string filename);
