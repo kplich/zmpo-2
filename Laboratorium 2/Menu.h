@@ -3,7 +3,6 @@
 #include <vector>
 #include <map>
 #include "Command.h"
-#include "../ParsingStack/ParsingStack.h"
 
 class Menu : public AbstractMenuItem
 {
@@ -90,10 +89,6 @@ private:
 	 * @param menu_item item that we're inserting
 	 */
 	void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* found_items, AbstractMenuItem* menu_item);
-
-	static Menu* parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_path);
-
-	static Menu* parse_beginning(ParsingStack* input, std::string* description, std::string* command, Menu* root, std::string parent_path);
 
 	/**
 	 * Command object that makes the user leave the current menu.
