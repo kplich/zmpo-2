@@ -1,0 +1,1 @@
+('Main menu','main_menu';['First option','first','First option in main menu.'],['Second option','second','Second option in main menu.'],('Submenu','sub_menu';['First option','first','First option in submenu.'],['Second option','second','Second option in submenu.'],),)

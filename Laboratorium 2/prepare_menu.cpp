@@ -17,7 +17,7 @@ const std::string put_value_help = "Change a desired value in one of the chosen 
 
 //all these allocations are deallocated in Menu and Command destructors
 //TODO: not nice menu building
-AbstractMenuItem* get_main_menu(std::vector<Table*>* table_vector)
+Menu* get_main_menu(std::vector<Table*>* table_vector)
 {
 	//TODO: ugly nullptr here
 	Menu* main_menu = new Menu("Open main menu", "main_menu", nullptr, "");

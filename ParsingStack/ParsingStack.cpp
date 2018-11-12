@@ -17,47 +17,70 @@ ParsingStack::~ParsingStack()
 	delete source;
 }
 
-char ParsingStack::pop_one()
+bool ParsingStack::peek(char& result)
 {
-	if (!source->empty())
+	if(source->empty())
 	{
-		char first = source->front();
+		return false;
+	}
+	else
+	{
+		result = source->front();
+		return true;
+	}
+}
+
+bool ParsingStack::pop_one(char& result)
+{
+	if(source->empty())
+	{
+		return false;
+	}
+	else
+	{
+		result = source->front();
 		source->pop_front();
 
 		++position_counter;
 
-		return first;
+		return true;
 	}
-	else return 0; //TODO: error here
 }
 
+//this method is kind of useless, bc false could be both an error and simply a mismatch
 bool ParsingStack::pop_equal_to(char expected)
 {
-	char found = pop_one();
-	bool result = found == expected;
+	char found;
 
-	if(!result)
+	if(pop_one(found))
 	{
-		parsing_error(found, expected);
+		return (found == expected);
 	}
-
-	return result;
+	else
+	{
+		return false;
+	}
 }
 
-
-std::string ParsingStack::pop_until_char_found(char ending_character)
+bool ParsingStack::pop_until_char_found(std::string& result, char ending_character)
 {
-	std::string result;
+	result = "";
+	char current_top;
 
-	char current_top = pop_one();
-
-	while(!source->empty() && current_top != ending_character)
+	//the loop is executed until it's possible to extract a character from the stack
+	while (pop_one(current_top))
 	{
-		result += current_top;
-		current_top = pop_one();
+		if (current_top != ending_character)
+		{
+			result += current_top;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
-	return result;
+	return false;
 }
 
 int ParsingStack::get_position()
@@ -68,12 +91,6 @@ int ParsingStack::get_position()
 bool ParsingStack::empty()
 {
 	return source->empty();
-}
-
-void ParsingStack::parsing_error(char expected, char found)
-{
-	std::cout << "Error at position " << position_counter << ".\n";
-	std::cout << "Expected: " << expected << ", found: " << found << ".\n";
 }
 
 

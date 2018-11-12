@@ -11,10 +11,19 @@ public:
 	~ParsingStack();
 
 	/**
-	 * Returns a character at the top of the stack
-	 * @return a character at the top of the stack
+	 * Peeks the character at the top of the string.
+	 * @param result reference to the peeked character
+	 * @return true if peeking the character was possible and succeeded, false otherwise
 	 */
-	char pop_one();
+	bool peek(char& result);
+
+	/**
+	 * Method for popping a character from the top of the stack to a variable.
+	 * @param result reference to character containing the popped character
+	 * (content undefined when method returns false!)
+	 * @return true if popping the character was possible, false otherwise
+	 */
+	bool pop_one(char& result);
 
 	/**
 	 * Pop a character from the string and check if it's equal to an expected character
@@ -22,13 +31,14 @@ public:
 	bool pop_equal_to(char expected);
 
 	/**
-	 * Returns a string based on chars popped until given character has been found.
-	 * After returning the string, the stack doesn't contain the ending character.
+	 * Extracts a string of characters until given character has been found.
+	 * After exiting the method, the stack doesn't contain the ending character.
+	 * @param result reference to a string containing all the characters popped until ending character has been found
+	 * (the returned string doesn't contain the ending character) (content undefined when method returns false!)
 	 * @param ending_character character that's supposed to terminate popping the characters
-	 * @return a string containing all the characters popped until ending character has been found
-	 * (the returned string doesn't contain the ending character)
+	 * @return true if extraction succeeded, false otherwise
 	 */
-	std::string pop_until_char_found(char ending_character);
+	bool pop_until_char_found(std::string& result, char ending_character);
 
 	/**
 	 * Returns current position in the input string.

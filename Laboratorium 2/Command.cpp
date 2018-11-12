@@ -40,65 +40,22 @@ std::string Command::get_help()
 
 std::string Command::to_string()
 {
-	return "" +
-		begin_command +
-			begin_and_end_string +
-			this->description +
-			begin_and_end_string +
-		separator +
-			begin_and_end_string +
-			this->command +
-			begin_and_end_string +
-		separator +
-			begin_and_end_string +
-			this->help +
-			begin_and_end_string +
-		end_command;
-}
+	std::string result;
 
-Command* Command::parse_command(ParsingStack* input, std::string parent_path)
-{
-	std::string description;
-	std::string command;
-	std::string help;
+	result += begin_command;
+	result += begin_and_end_string;
+	result += this->description;
+	result += begin_and_end_string;
+	result += separator;
+	result += begin_and_end_string;
+	result += this->command;
+	result += begin_and_end_string;
+	result += separator;
+	result += begin_and_end_string;
+	result += this->help;
+	result += begin_and_end_string;
+	result += end_command;
 
-	if(input->pop_equal_to(begin_command)) //parse beginning of command '['
-	{
-		if(input->pop_equal_to(begin_and_end_string)) //parse beginning of string '\''
-		{
-			//parse description
-			description = input->pop_until_char_found(begin_and_end_string);
-
-			if(input->pop_equal_to(separator)) //parse separator ','
-			{
-				if(input->pop_equal_to(begin_and_end_string)) //parse beginning of string '\''
-				{
-					//parse command
-					command = input->pop_until_char_found(begin_and_end_string);
-
-					if(input->pop_equal_to(separator)) //parse separator ','
-					{
-						if(input->pop_equal_to(begin_and_end_string)) //parse beginning of string '\''
-						{
-							help = input->pop_until_char_found(begin_and_end_string);
-
-							if(input->pop_equal_to(end_command)) //parse end of command ']'
-							{
-								return new Command(
-									description,
-									command,
-									parent_path,
-									new DefaultAction,
-									help
-								);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return nullptr;
+	return result;
 }
 

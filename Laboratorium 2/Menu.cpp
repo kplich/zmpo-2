@@ -7,17 +7,15 @@
 #include "SearchAction.h"
 #include "HelpAction.h"
 #include <fstream>
+#include "Parser.h"
 
-static const char begin_and_end_string = '\'';
+//TODO: is this a good way for keeping constants?
 static const char begin_menu = '(';
-static const char end_menu = ')';
+static const char begin_and_end_string = '\'';
 static const char description_command_separator = ',';
 static const char command_children_separator = ';';
 static const char children_separator = ',';
-static const std::string end_children = "eoc";
-
-//TODO: this should come from Command; how to make that available?
-static const char begin_command = '[';
+static const char end_menu = ')';
 
 //TODO: this really shouldn't be here
 static const std::string return_item_command = "return";
@@ -37,7 +35,6 @@ static const std::string no_item_found = "No option with given command found.";
 Menu::Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
 {
-	//TODO: wrr, ugly!
 	if (root_menu == nullptr)
 	{
 		this->root_menu = this;
@@ -82,7 +79,6 @@ Menu::Menu(std::string description, std::string command, Menu* root_menu, std::s
 Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string description, std::string command, Menu* root_menu, std::string parent_path):
 	AbstractMenuItem(description, command, parent_path)
 {
-	//TODO: wrr, ugly!
 	if (root_menu == nullptr)
 	{
 		this->root_menu = this;
@@ -124,6 +120,11 @@ Menu::Menu(std::map<std::string, AbstractMenuItem*>* item_map, std::string descr
 
 Menu::~Menu()
 {
+	//deallocate special items
+	delete return_item;
+	delete search_item;
+	delete help_item;
+
 	//deallocate all items in the map and the map itself
 	std::map<std::string, AbstractMenuItem*>::iterator deleting_iterator = item_map->begin();
 
@@ -134,11 +135,6 @@ Menu::~Menu()
 	}
 	item_map->clear();
 	delete item_map;
-
-	//deallocate special items
-	delete return_item;
-	delete search_item;
-	delete help_item;
 }
 
 void Menu::print_options()
@@ -159,12 +155,10 @@ AbstractMenuItem* Menu::choose_option()
 	std::string user_input = get_user_input();
 	AbstractMenuItem* found_item = nullptr;
 
-
 	if (user_input == return_item_command)
 	{
 		found_item = return_item;
 	}
-	
 	if (user_input == search_item_command)
 	{
 		found_item = search_item;
@@ -254,94 +248,18 @@ void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_m
 	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
 }
 
-Menu* Menu::parse_menu(ParsingStack* input, Menu* root_menu, std::string parent_path)
-{
-	std::string description;
-	std::string command;
-
-	//TODO: separate parsing strings and parsing children
-
-	Menu* result_item = parse_beginning(input, &description, &command, root_menu, parent_path);
-
-	if (result_item != nullptr) {
-
-		//parse command-children delimiter
-		if (input->pop_equal_to(command_children_separator))
-		{
-			char top = input->pop_one();
-
-			while (top == begin_menu || top == begin_command)
-			{
-				AbstractMenuItem* child_item;
-				if (top == begin_menu)
-				{
-					child_item = parse_menu(input, result_item, result_item->get_path());
-					if (child_item != nullptr) {
-						result_item->add_item(child_item);
-					}
-				}
-				else if (top == begin_command)
-				{
-					child_item = Command::parse_command(input, result_item->get_path());
-					if (child_item != nullptr) {
-						result_item->add_item(child_item);
-					}
-				}
-			}
-
-			std::string eoc = input->pop_until_char_found(end_menu);
-			if (eoc == end_children)
-			{
-				return  result_item;
-			}
-			//TODO: reached end of string but no end of menu :o
-		}
-	}
-
-	return nullptr;
-}
-
-Menu* Menu::parse_beginning(ParsingStack* input, std::string* description, std::string* command, Menu* root, std::string parent_path)
-{
-	if (input->pop_equal_to(begin_menu)) //parse beginning of menu
-	{
-		if (input->pop_equal_to(begin_and_end_string)) //parse beginning of a string
-		{
-			//parse description
-			*description = input->pop_until_char_found(begin_and_end_string);
-
-			//parse description-command delimiter
-			if (input->pop_equal_to(description_command_separator))
-			{
-				//parse beginning of a string
-				if (input->pop_equal_to(begin_and_end_string))
-				{
-					//parse command
-					*command = input->pop_until_char_found(begin_and_end_string);
-
-					return new Menu(*description, *command, root, parent_path);
-				}
-			}
-		}
-	}
-
-	return nullptr;
-}
-
-
 std::string Menu::to_string()
 {
-	std::string result =
-		"" +
-		begin_menu +
-			begin_and_end_string +
-			this->description + 
-			begin_and_end_string +
-		description_command_separator +
-			begin_and_end_string +
-			this->command +
-			begin_and_end_string +
-		command_children_separator;
+	std::string result;
+	result += begin_menu; 
+	result += begin_and_end_string;
+	result += this->description;
+	result += begin_and_end_string;
+	result += description_command_separator;
+	result += begin_and_end_string;
+	result += this->command;
+	result += begin_and_end_string;
+	result += command_children_separator;
 
 	std::map<std::string, AbstractMenuItem*>::iterator iterator = item_map->begin();
 	for(; iterator != item_map->end(); ++iterator)
@@ -349,7 +267,6 @@ std::string Menu::to_string()
 		result += iterator->second->to_string();
 		result += children_separator;
 	}
-	result += end_children;
 	result += end_menu;
 
 	return result;
@@ -375,13 +292,9 @@ Menu* Menu::open_menu(std::string filename)
 
 	if(source.is_open())
 	{
-		source >> string_source;
+		std::getline(source, string_source);
 	}
 	source.close();
 
-	return parse_menu(
-		new ParsingStack(string_source),
-		nullptr,
-		""
-	);
+	return (new Parser(string_source))->parse();
 }
