@@ -7,25 +7,6 @@
 #include "Parser.h"
 #include "special_actions.h"
 
-//note: it's a great way of keeping constants!
-//static const char begin_menu = '(';
-//static const char begin_and_end_string = '\'';
-//static const char description_command_separator = ',';
-//static const char command_children_separator = ';';
-//static const char children_separator = ',';
-//static const char end_menu = ')';
-
-//TODO: this really shouldn't be here
-static const std::string return_item_command = "return";
-static const std::string search_item_command = "search";
-static const std::string help_item_command = "help";
-static const std::string return_item_description = "Return to previous menu";
-static const std::string search_item_description = "Search in whole menu.";
-static const std::string help_item_description = "Get help for a command in the menu.";
-static const std::string return_item_help = "Returns to previous menu";
-static const std::string search_item_help = "Returns all paths to items with given command.";
-static const std::string help_item_help = "Prints additional information about a given command.";
-
 static const std::string available_items = "Available options:";
 static const std::string no_item_found = "No option with given command found.";
 
@@ -238,12 +219,6 @@ void Menu::delete_item(std::string item_command)
 	item_map->erase(item_map->find(item_command));
 
 	delete deleted_item;
-}
-
-//TODO: something about this???
-void Menu::insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item)
-{
-	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
 }
 
 std::string Menu::to_string()

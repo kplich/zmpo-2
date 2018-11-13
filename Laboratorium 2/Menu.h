@@ -89,13 +89,6 @@ private:
 	AbstractMenuItem* choose_option();
 
 	/**
-	 * Helper method to simplify inserting VirtualMenuItems into a map
-	 * @param found_items map of items into which we insert the new item
-	 * @param menu_item item that we're inserting
-	 */
-	void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* found_items, AbstractMenuItem* menu_item);
-
-	/**
 	 * Command object that makes the user leave the current menu.
 	 */
 	Command* return_item;

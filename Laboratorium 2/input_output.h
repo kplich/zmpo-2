@@ -1,6 +1,8 @@
 #pragma once
 #pragma once
 #include <string>
+#include "AbstractMenuItem.h"
+#include <map>
 
 /**
  * Maximal size we allow a newly created or resized table to have.
@@ -62,3 +64,9 @@ int loop_until_valid_int(int range_min, int range_max);
 void communicate_success(bool operation_succeeded);
 
 void unknown_code();
+/**
+ * Helper method to simplify inserting VirtualMenuItems into a map
+ * @param item_map map of items into which we insert the new item
+ * @param menu_item item that we're inserting
+ */
+void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item);

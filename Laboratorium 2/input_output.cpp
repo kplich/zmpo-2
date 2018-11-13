@@ -95,3 +95,8 @@ void unknown_code()
 {
 	std::cout << "Nie wiem, jaka operacje wykonac.\n";
 }
+
+void insert_item_into_map(std::map<std::string, AbstractMenuItem*>* item_map, AbstractMenuItem* menu_item)
+{
+	item_map->insert(std::pair<std::string, AbstractMenuItem*>(menu_item->get_command(), menu_item));
+}

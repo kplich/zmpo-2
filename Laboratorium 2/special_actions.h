@@ -13,6 +13,12 @@ public:
 	void perform_action() const override;
 };
 
+//------------------------------------------------------------------------------
+
+static const std::string help_item_command = "help";
+static const std::string help_item_description = "Get help for a command in the menu.";
+static const std::string help_item_help = "Prints additional information about a given command.";
+
 /**
  * Action for searching for help in a menu.
  */
@@ -27,6 +33,12 @@ private:
 	std::map<std::string, AbstractMenuItem*>* item_map;
 };
 
+//---------------------------------------------------------------------------
+
+static const std::string return_item_command = "return";
+static const std::string return_item_description = "Return to previous menu";
+static const std::string return_item_help = "Returns to previous menu";
+
 class ReturnAction :
 	public AbstractAction
 {
@@ -35,6 +47,12 @@ public:
 	~ReturnAction();
 	void perform_action() const override;
 };
+
+//----------------------------------------------------------------------------
+
+static const std::string search_item_command = "search";
+static const std::string search_item_description = "Search in whole menu.";
+static const std::string search_item_help = "Returns all paths to items with given command.";
 
 /**
  * Action for searching the menu for items with a given command

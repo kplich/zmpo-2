@@ -61,6 +61,4 @@ private:
 	 * Number indicating position in the string - number of the last popped character.
 	 */
 	int position_counter;
-
-	void parsing_error(char expected, char found);
 };
