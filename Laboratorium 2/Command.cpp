@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Command.h"
-#include "DefaultAction.h"
 #include "../ParsingStack/ParsingStack.h"
+#include "special_actions.h"
 
 Command::~Command()
 {

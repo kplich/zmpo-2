@@ -2,6 +2,17 @@
 #include "vector_based_action_classes.h"
 #include "action_implementations.h"
 
+TableAction::TableAction(std::vector<Table*>* table_vector)
+{
+	this->table_vector = table_vector;
+}
+
+TableAction::~TableAction()
+{
+}
+
+//-----------------------------------------------------------------------------
+
 AddTable::AddTable(std::vector<Table*>* table_vector)
 	:TableAction(table_vector)
 {

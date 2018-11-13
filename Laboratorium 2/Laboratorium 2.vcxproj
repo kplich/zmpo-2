@@ -160,8 +160,6 @@
     <ClInclude Include="vector_based_action_classes.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="prepare_menu.h" />
-    <ClInclude Include="TableAction.h" />
     <ClInclude Include="AbstractMenuItem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="AbstractAction.h" />
@@ -170,18 +168,13 @@
     <ClCompile Include="..\..\Laboratorium 1\Laboratorium 1\Table.cpp" />
     <ClCompile Include="..\ParsingStack\ParsingStack.cpp" />
     <ClCompile Include="action_implementations.cpp" />
-    <ClCompile Include="DefaultAction.cpp" />
-    <ClCompile Include="HelpAction.cpp" />
     <ClCompile Include="input_output.cpp" />
     <ClCompile Include="Parser.cpp" />
-    <ClCompile Include="SearchAction.cpp" />
+    <ClCompile Include="special_actions.cpp" />
     <ClCompile Include="vector_based_action_classes.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Command.cpp" />
-    <ClCompile Include="ReturnAction.cpp" />
-    <ClCompile Include="prepare_menu.cpp" />
-    <ClCompile Include="TableAction.cpp" />
     <ClCompile Include="AbstractMenuItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

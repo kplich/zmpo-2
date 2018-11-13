@@ -2,12 +2,10 @@
 #include "Menu.h"
 #include <iostream>
 #include <iterator>
-#include "ReturnAction.h"
 #include "input_output.h"
-#include "SearchAction.h"
-#include "HelpAction.h"
 #include <fstream>
 #include "Parser.h"
+#include "special_actions.h"
 
 //note: it's a great way of keeping constants!
 //static const char begin_menu = '(';
