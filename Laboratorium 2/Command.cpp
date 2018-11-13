@@ -3,11 +3,6 @@
 #include "DefaultAction.h"
 #include "../ParsingStack/ParsingStack.h"
 
-static const char begin_and_end_string = '\'';
-static const char begin_command = '[';
-static const char separator = ',';
-static const char end_command = ']';
-
 Command::~Command()
 {
 	delete action;

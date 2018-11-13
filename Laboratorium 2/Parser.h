@@ -8,6 +8,7 @@
 class Parser
 {
 public:
+
 	/**
 	 * Parser only needs to be constructed from an input string.
 	 */

@@ -8,6 +8,10 @@ class ParsingStack;
 class Command : public AbstractMenuItem
 {
 public:
+	static const char begin_command = '[';
+	static const char separator = ',';
+	static const char end_command = ']';
+
 	/**
 	 * Parametrized constructor.
 	 */

@@ -7,6 +7,12 @@
 class Menu : public AbstractMenuItem
 {
 public:
+	static const char begin_menu = '(';
+	static const char description_command_separator = ',';
+	static const char command_children_separator = ';';
+	static const char children_separator = ',';
+	static const char end_menu = ')';
+
 	/**
 	 * Constructor not based on a map - menus can be expanded during runtime
 	 */

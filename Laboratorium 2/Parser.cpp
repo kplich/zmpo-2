@@ -3,19 +3,6 @@
 #include "DefaultAction.h"
 #include <iostream>
 
-//TODO: repeated in both command and menu classes
-static const char begin_and_end_string = '\'';
-
-static const char begin_menu = '(';
-static const char description_command_separator = ',';
-static const char command_children_separator = ';';
-static const char children_separator = ',';
-static const char end_menu = ')';
-
-static const char begin_command = '[';
-static const char separator = ',';
-static const char end_command = ']';
-
 Parser::Parser(std::string input)
 {
 	this->source = new ParsingStack(input);
@@ -44,17 +31,17 @@ AbstractMenuItem* Parser::parse_item(Menu* root, std::string parent_path)
 
 	switch (found)
 	{
-		case begin_menu:
+		case Menu::begin_menu:
 		{
 			return parse_menu(root, parent_path);
 		}
-		case begin_command:
+		case Command::begin_command:
 		{
 			return parse_command(parent_path);
 		}
 		default:
 		{
-			parsing_error("Expected: " + std::to_string(begin_menu) + " or " + std::to_string(begin_command) + ", found: " + found + ".");
+			parsing_error("Expected: " + std::to_string(Menu::begin_menu) + " or " + std::to_string(Command::begin_command) + ", found: " + found + ".");
 			return nullptr;
 		}
 	}
@@ -70,7 +57,7 @@ Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 	}
 
 	//parse command-children delimiter, any error will be signalled from the method
-	if (!parse_char(command_children_separator))
+	if (!parse_char(Menu::command_children_separator))
 	{
 		return nullptr;
 	}
@@ -84,7 +71,7 @@ Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 	}
 
 	//all children parsed here
-	while (top != end_menu)
+	while (top != Menu::end_menu)
 	{
 		//parse a child item. any errors will be signalled in this call
 		AbstractMenuItem* child_item = parse_item(result_item, result_item->get_path());
@@ -99,7 +86,7 @@ Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 		result_item->add_item(child_item);
 
 		//parse children separator, any error will be signalled here
-		if (!parse_char(children_separator))
+		if (!parse_char(Menu::children_separator))
 		{
 			return nullptr;
 		}
@@ -112,7 +99,7 @@ Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 	}
 
 	//parse the finishing char
-	parse_char(end_menu);
+	parse_char(Menu::end_menu);
 
 	//this message is only relevant when we're parsing main menu
 	if (root == nullptr && !source->empty())
@@ -129,7 +116,7 @@ Menu* Parser::parse_beginning_of_menu(Menu* root, std::string parent_path)
 	std::string command;
 
 	//parse beginning of menu
-	if (!parse_char(begin_menu))
+	if (!parse_char(Menu::begin_menu))
 	{
 		return nullptr;
 	}
@@ -141,7 +128,7 @@ Menu* Parser::parse_beginning_of_menu(Menu* root, std::string parent_path)
 	}
 
 	//parse description-command delimiter
-	if (!parse_char(description_command_separator))
+	if (!parse_char(Menu::description_command_separator))
 	{
 		return nullptr;
 	}
@@ -164,7 +151,7 @@ Command* Parser::parse_command(std::string parent_path)
 	std::string command;
 	std::string help;
 
-	if (!parse_char(begin_command)) //parse beginning of command '['
+	if (!parse_char(Command::begin_command)) //parse beginning of command '['
 	{
 		return nullptr;
 	}
@@ -174,7 +161,7 @@ Command* Parser::parse_command(std::string parent_path)
 		return nullptr;
 	}
 
-	if (!parse_char(separator)) //parse separator ','
+	if (!parse_char(Command::separator)) //parse separator ','
 	{
 		return nullptr;
 	}
@@ -184,7 +171,7 @@ Command* Parser::parse_command(std::string parent_path)
 		return nullptr;
 	}
 
-	if (!parse_char(separator)) //parse separator ','
+	if (!parse_char(Command::separator)) //parse separator ','
 	{
 		return nullptr;
 	}
@@ -194,7 +181,7 @@ Command* Parser::parse_command(std::string parent_path)
 		return nullptr;
 	}
 
-	if (!parse_char(end_command)) //parse end of command ']'
+	if (!parse_char(Command::end_command)) //parse end of command ']'
 	{
 		return nullptr;
 	}
@@ -211,15 +198,15 @@ bool Parser::extract_string(std::string& result)
 		return false;
 	}
 
-	if(found != begin_and_end_string)
+	if(found != AbstractMenuItem::begin_and_end_string)
 	{
-		parsing_error(begin_and_end_string, found);
+		parsing_error(AbstractMenuItem::begin_and_end_string, found);
 		return false;
 	}
 
 	result = "";
 
-	if (!source->pop_until_char_found(result, begin_and_end_string))
+	if (!source->pop_until_char_found(result, AbstractMenuItem::begin_and_end_string))
 	{
 		return false;
 	}

@@ -9,13 +9,13 @@
 #include <fstream>
 #include "Parser.h"
 
-//TODO: is this a good way for keeping constants?
-static const char begin_menu = '(';
-static const char begin_and_end_string = '\'';
-static const char description_command_separator = ',';
-static const char command_children_separator = ';';
-static const char children_separator = ',';
-static const char end_menu = ')';
+//note: it's a great way of keeping constants!
+//static const char begin_menu = '(';
+//static const char begin_and_end_string = '\'';
+//static const char description_command_separator = ',';
+//static const char command_children_separator = ';';
+//static const char children_separator = ',';
+//static const char end_menu = ')';
 
 //TODO: this really shouldn't be here
 static const std::string return_item_command = "return";

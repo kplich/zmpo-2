@@ -8,6 +8,8 @@
 class AbstractMenuItem
 {
 public:
+	static const char begin_and_end_string = '\'';
+
 	AbstractMenuItem(std::string description, std::string command, std::string parent_path);
 
 	/**

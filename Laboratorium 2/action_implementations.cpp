@@ -4,7 +4,8 @@
 #include "input_output.h"
 
 
-//TODO: extract out strings
+//TODO: [N/A] extract out strings (there are more important things to do)
+
 const std::string all_tables_message = "All tables:";
 
 void print_all_tables(std::vector<Table*>* vector_of_tables)

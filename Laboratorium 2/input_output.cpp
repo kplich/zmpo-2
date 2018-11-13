@@ -4,7 +4,7 @@
 #include <string>
 #include "input_output.h"
 
-//TODO: extract out strings
+//TODO: [N/A] extract out strings (there are more important things to do)
 
 std::string int_to_string(int number)
 {

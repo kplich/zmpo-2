@@ -154,15 +154,12 @@
     <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\Table.h" />
     <ClInclude Include="..\ParsingStack\ParsingStack.h" />
     <ClInclude Include="action_implementations.h" />
-    <ClInclude Include="DefaultAction.h" />
-    <ClInclude Include="HelpAction.h" />
     <ClInclude Include="input_output.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="SearchAction.h" />
+    <ClInclude Include="special_actions.h" />
     <ClInclude Include="vector_based_action_classes.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="ReturnAction.h" />
     <ClInclude Include="prepare_menu.h" />
     <ClInclude Include="TableAction.h" />
     <ClInclude Include="AbstractMenuItem.h" />

@@ -21,9 +21,6 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Laboratorium 1\Laboratorium 1\Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,9 +39,6 @@
     <ClInclude Include="TableAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractMenuItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,16 +48,13 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SearchAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HelpAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ParsingStack\ParsingStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="special_actions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
