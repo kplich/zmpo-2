@@ -7,9 +7,7 @@
 class DefaultAction : public AbstractAction
 {
 public:
-	DefaultAction();
-	virtual ~DefaultAction();
-
+	//default constructor and destructor
 	void perform_action() const override;
 };
 
@@ -27,7 +25,7 @@ class HelpAction :
 {
 public:
 	HelpAction(std::map<std::string, AbstractMenuItem*>* item_map);
-	~HelpAction();
+	//default destructor
 	void perform_action() const override;
 private:
 	std::map<std::string, AbstractMenuItem*>* item_map;
@@ -43,8 +41,7 @@ class ReturnAction :
 	public AbstractAction
 {
 public:
-	ReturnAction();
-	~ReturnAction();
+	//default destructor and constructor
 	void perform_action() const override;
 };
 
@@ -61,8 +58,7 @@ class SearchAction : public AbstractAction
 {
 public:
 	SearchAction(Menu* root_menu);
-	~SearchAction();
-
+	//default destructor
 	void perform_action() const override;
 
 private:

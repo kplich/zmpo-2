@@ -3,14 +3,6 @@
 #include <iostream>
 #include "input_output.h"
 
-DefaultAction::DefaultAction()
-{
-}
-
-DefaultAction::~DefaultAction()
-{
-}
-
 void DefaultAction::perform_action() const
 {
 	std::cout << "Default action.\n";
@@ -21,11 +13,6 @@ void DefaultAction::perform_action() const
 HelpAction::HelpAction(std::map<std::string, AbstractMenuItem*>* item_map)
 {
 	this->item_map = item_map;
-}
-
-
-HelpAction::~HelpAction()
-{
 }
 
 void HelpAction::perform_action() const
@@ -58,13 +45,6 @@ void HelpAction::perform_action() const
 
 //------------------------------------------------------------------------------------------------------------
 
-//TODO: just delete that?
-ReturnAction::ReturnAction() = default;
-
-ReturnAction::~ReturnAction()
-{
-}
-
 void ReturnAction::perform_action() const
 {
 	std::cout << "Returning to previous menu.\n";
@@ -75,11 +55,6 @@ void ReturnAction::perform_action() const
 SearchAction::SearchAction(Menu* root_menu)
 {
 	this->root_menu = root_menu;
-}
-
-
-SearchAction::~SearchAction()
-{
 }
 
 void SearchAction::perform_action() const
@@ -109,4 +84,3 @@ void SearchAction::perform_action() const
 
 	delete paths_found;
 }
-

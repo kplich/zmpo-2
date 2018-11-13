@@ -46,14 +46,6 @@ public:
 	void delete_item(std::string item_command);
 
 	/**
-	 * Method for searching for a menu item in the whole subtree (invoked recursively)
-	 * @param command_name name of the command to find
-	 * @param found_paths map for storing items found so far and adding new ones
-	 */
-	//TODO: should this really be public?
-	void search_for_command(std::string command_name, std::vector<std::string>* found_paths);
-
-	/**
 	 * Returns a textual representation of the string.
 	 * @return a string in the format ("description","command";<child1>,<child2>,...)
 	 */
@@ -65,7 +57,17 @@ public:
 	void save_menu(std::string filename);
 
 	static Menu* open_menu(std::string filename);
+
+	//necessary so that a search could be performed
+	//TODO: is this friendship a good idea?
+	friend class SearchAction;
 private:
+	/**
+	 * Method for searching for a menu item in the whole subtree (invoked recursively)
+	 * @param command_name name of the command to find
+	 * @param found_paths map for storing items found so far and adding new ones
+	 */
+	void search_for_command(std::string command_name, std::vector<std::string>* found_paths);
 
 	/**
 	 * Map of menu items and their commands - both submenus and commands.
