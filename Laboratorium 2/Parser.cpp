@@ -142,9 +142,6 @@ Menu* Parser::parse_beginning_of_menu(Menu* root, std::string parent_path)
 	return new Menu(description, command, root, parent_path);
 }
 
-
-
-
 Command* Parser::parse_command(std::string parent_path)
 {
 	std::string description;
