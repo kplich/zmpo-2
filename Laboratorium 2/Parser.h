@@ -86,6 +86,8 @@ private:
 	 */
 	void parsing_error(char expected, char found);
 
+	void parsing_error(std::string expected, char found);
+
 	/**
 	 * Helper method for signalling other errors with causes different than a character mismatch.
 	 * @param message message about the error

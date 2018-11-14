@@ -6,6 +6,7 @@
 #include <fstream>
 #include "Parser.h"
 #include "special_actions.h"
+#include <sstream>
 
 static const std::string available_items = "Available options:";
 static const std::string no_item_found = "No option with given command found.";
@@ -265,7 +266,9 @@ Menu* Menu::open_menu(std::string filename)
 
 	if(source.is_open())
 	{
-		std::getline(source, string_source);
+		std::stringstream stream;
+		stream << source.rdbuf();
+		string_source = stream.str();
 	}
 	source.close();
 

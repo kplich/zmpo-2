@@ -3,6 +3,11 @@
 #include <iostream>
 #include "special_actions.h"
 
+static const std::string error_at_pos = "error at position";
+static const std::string expected_msg = "expected";
+static const std::string found_msg = "found";
+static const std::string end_of_string = "reached end of string.";
+
 Parser::Parser(std::string input)
 {
 	this->source = new ParsingStack(input);
@@ -41,7 +46,9 @@ AbstractMenuItem* Parser::parse_item(Menu* root, std::string parent_path)
 		}
 		default:
 		{
-			parsing_error("Expected: " + std::to_string(Menu::begin_menu) + " or " + std::to_string(Command::begin_command) + ", found: " + found + ".");
+			std::string expected_chars;
+			(expected_chars += Menu::begin_menu) += Command::begin_command;
+			parsing_error(expected_chars, found);
 			return nullptr;
 		}
 	}
@@ -51,54 +58,90 @@ Menu* Parser::parse_menu(Menu* root, std::string parent_path)
 {
 	Menu* result_item = parse_beginning_of_menu(root, parent_path);
 
+	//if parsing beginning failed, discard the result
 	if (result_item == nullptr)
 	{
+		delete result_item;
 		return nullptr;
 	}
 
 	//parse command-children delimiter, any error will be signalled from the method
 	if (!parse_char(Menu::command_children_separator))
 	{
+		delete result_item;
 		return nullptr;
 	}
 
-	//we need to know what's at the top of the stack,
-	//but so do the methods later
+	//check what's at the top of the stack (but don't pop yet, we're gonna need it)
 	char top;
+
+	//if we reach the end of string, signal an error
 	if (!source->peek(top)) {
-		end_of_string_error();
+
+		std::string expected_chars;
+		((expected_chars += Menu::begin_menu) += Command::begin_command) += Menu::end_menu;
+		parsing_error(expected_chars, 0);
+
+		delete result_item;
 		return nullptr;
 	}
 
-	//all children parsed here
+	//children parsed here
 	while (top != Menu::end_menu)
 	{
 		//parse a child item. any errors will be signalled in this call
 		AbstractMenuItem* child_item = parse_item(result_item, result_item->get_path());
 
+		//if parsing child didnt succeed, discard the whole result
 		if (child_item == nullptr)
 		{
-			//if there was an error during parsing a child,
-			//the whole string should get invalidated
+			delete result_item;
 			return nullptr;
 		}
 
 		result_item->add_item(child_item);
 
-		//parse children separator, any error will be signalled here
-		if (!parse_char(Menu::children_separator))
+		//peek at the next character
+		//if we reach the end of the string, signal an error
+		if(!source->peek(top))
 		{
+			std::string expected_chars;
+			(expected_chars += Menu::children_separator) += Menu::end_menu;
+			parsing_error(expected_chars, 0);
+
+			delete result_item;
 			return nullptr;
 		}
 
-		if (!source->peek(top))
+		switch(top)
 		{
-			end_of_string_error();
-			return nullptr;
+			case Menu::children_separator:
+			{
+				//we know this succeeds, so no check here
+				//we can attempt to parse another child in next repetition of the loop
+				parse_char(Menu::children_separator);
+				break;
+			}
+			case Menu::end_menu:
+			{
+				//don't do anything, the loop will break in next iteration
+				//this is the only place from which you can exit this loop
+				break;
+			}
+			default:
+			{
+				std::string expected_chars;
+				(expected_chars += Menu::children_separator) += Menu::end_menu;
+				parsing_error(expected_chars, top);
+
+				delete result_item;
+				return nullptr;
+			}
 		}
 	}
 
-	//parse the finishing char
+	//parse the closing char
+	//no check, because the only way to exit the loop above is to reach menu ending character
 	parse_char(Menu::end_menu);
 
 	//this message is only relevant when we're parsing main menu
@@ -205,6 +248,7 @@ bool Parser::extract_string(std::string& result)
 
 	if (!source->pop_until_char_found(result, AbstractMenuItem::begin_and_end_string))
 	{
+		parsing_error(AbstractMenuItem::begin_and_end_string, 0);
 		return false;
 	}
 
@@ -231,23 +275,52 @@ bool Parser::parse_char(char expected)
 
 void Parser::parsing_error(char expected, char found)
 {
-	std::cout << "Error at position " << source->get_position() << ".\n";
-	std::cout << "Expected: " << expected << ", found: " << found << ".\n";
+	std::cout << error_at_pos << ": " << source->get_position() << ".\n";
+
+	if(found == 0)
+	{
+		std::cout << expected_msg << ": " << expected << "\n";
+		std::cout << end_of_string << "\n";
+	}
+	else
+	{
+		std::cout << expected_msg << ": " << expected << "\n";
+		std::cout << found_msg << ": " << found << "\n";
+	}
+	
+}
+
+void Parser::parsing_error(std::string expected, char found)
+{
+	std::cout << error_at_pos << ": " << source->get_position() << ".\n";
+	std::cout << expected_msg << ":\n";
+
+	for(int i = 0; i < expected.length(); ++i)
+	{
+		std::cout << expected[i] << "\t";
+	}
+	std::cout << "\n";
+
+	if(found == 0)
+	{
+		std::cout << end_of_string << "\n";
+	}
+	else
+	{
+		std::cout << found_msg << ": " << found << ".\n";
+	}
+	
 }
 
 void Parser::parsing_error(std::string message)
 {
-	std::cout << "Error at position " << source->get_position() << ".\n";
+	std::cout << error_at_pos << ": " << source->get_position() << ".\n";
 	std::cout << message << "\n";
 }
 
 void Parser::end_of_string_error()
 {
-	std::cout << "Error at position " << source->get_position() << ".\n";
-	std::cout << "Reached end of string too early.\n";
+	std::cout << error_at_pos << ": " << source->get_position() << ".\n";
+	std::cout << end_of_string << "\n";
 	
 }
-
-
-
-

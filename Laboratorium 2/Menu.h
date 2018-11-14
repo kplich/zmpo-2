@@ -17,7 +17,7 @@ public:
 	/**
 	 * Constructor not based on a map - menus can be expanded during runtime
 	 */
-	Menu(std::string description, std::string command, Menu* root_menu, std::string parent_path);
+	Menu(std::string description, std::string command, Menu* root_menu = nullptr, std::string parent_path = "");
 
 	/**
 	 * Parametrized constructor based on a <b>map</b> of menu items
