@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <list>
 
 /**
  * Generic class for implementing a runnable menu item.

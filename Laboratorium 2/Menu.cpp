@@ -271,3 +271,47 @@ Menu* Menu::open_menu(std::string filename)
 
 	return (new Parser(string_source))->parse();
 }
+
+void Menu::print_by_breadth()
+{
+	std::list<AbstractMenuItem*> queue;
+
+	queue.emplace_back(this);
+	queue.emplace_back(nullptr);
+
+	print_by_breadth(&queue);
+}
+
+//doesn't exactly work :/
+void Menu::print_by_breadth(std::list<AbstractMenuItem*>* queue)
+{
+	AbstractMenuItem* top;
+
+	while(!queue->empty())
+	{
+		top = queue->front();
+		queue->pop_front();
+
+		if(top != nullptr)
+		{
+			std::cout << top->get_command() << "\t";
+
+			Menu* possible_menu = dynamic_cast<Menu*>(top);
+
+			if (possible_menu != nullptr)
+			{
+				std::map<std::string, AbstractMenuItem*>::iterator it = possible_menu->item_map->begin();
+
+				for (; it != possible_menu->item_map->end(); ++it)
+				{
+					queue->emplace_back(it->second);
+				}
+				queue->emplace_back(nullptr);
+			}
+		}
+		else
+		{
+			std::cout << "\n";
+		}
+	}
+}

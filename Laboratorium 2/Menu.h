@@ -2,6 +2,7 @@
 #include "AbstractMenuItem.h"
 #include <vector>
 #include <map>
+#include <list>
 #include "Command.h"
 
 class Menu : public AbstractMenuItem
@@ -58,10 +59,15 @@ public:
 
 	static Menu* open_menu(std::string filename);
 
+	void print_by_breadth();
+
 	//necessary so that a search could be performed
 	//TODO: is this friendship a good idea?
 	friend class SearchAction;
 private:
+
+	void print_by_breadth(std::list<AbstractMenuItem*>* queue);
+
 	/**
 	 * Method for searching for a menu item in the whole subtree (invoked recursively)
 	 * @param command_name name of the command to find
